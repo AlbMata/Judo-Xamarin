@@ -36,9 +36,6 @@ namespace JudoDotNetXamarin
             var nh = new NativeHandler (httpClientHelper.MessageHandler, credentials,
                          XamarinLoggerFactory.Create (typeof(AuthorizationHandler)), Apiversionheader, API_VERSION);
             HttpClientWrapper httpClient = new HttpClientWrapper (nh);
-//            HttpClient httpClient = new HttpClientWrapper (nh, new AuthorizationHandler (credentials,
-//                                 XamarinLoggerFactory.Create (typeof(AuthorizationHandler))),
-//                                 new VersioningHandler (Apiversionheader, API_VERSION));
             var connection = new Connection (httpClient,
                                  XamarinLoggerFactory.Create,
                                  baseUrl);

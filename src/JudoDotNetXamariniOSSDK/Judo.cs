@@ -81,7 +81,17 @@ namespace JudoDotNetXamariniOSSDK
 
         private static readonly ServiceFactory serviceFactory = new ServiceFactory ();
         private static readonly AppleServiceFactory appleServiceFactory = new AppleServiceFactory ();
-        private static readonly IPaymentService PaymentService = serviceFactory.GetPaymentService ();
+        private static readonly IPaymentService PaymentService = GetInitialService ();
+
+        internal static IPaymentService GetInitialService ()
+        {
+    
+            if (!ServiceContainer.IsRegistered <IHttpClientHelper> ()) {
+                ServiceContainer.Register<IHttpClientHelper> (new HttpClientHelper ());
+            }          
+            return serviceFactory.GetPaymentService ();
+        }
+
         private static readonly IApplePayService ApplePaymentService = appleServiceFactory.GetApplePaymentService ();
         private  IApplePayMethods _applePayMethods = new ApplePayMethods (ApplePaymentService);
         private static IJudoSDKApi _judoSdkApi;
