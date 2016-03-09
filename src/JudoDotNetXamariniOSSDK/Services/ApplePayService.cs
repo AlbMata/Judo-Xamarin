@@ -59,8 +59,6 @@ namespace JudoDotNetXamariniOSSDK.Services
             }
         }
 
-
-
         public async Task<IResult<ITransactionResult>> HandlePKPayment (PKPayment payment, string customerRef, NSDecimalNumber amount, ApplePaymentType type, JudoFailureCallback failure)
         {
             try {
