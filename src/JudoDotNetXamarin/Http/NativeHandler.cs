@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Net.Http;
 
 namespace JudoDotNetXamarin
 {
-	public class NativeHandler
+	public class NativeHandler : DelegatingHandler
 	{
-		public NativeHandler ()
+		public NativeHandler(HttpMessageHandler innerHandler) : base(innerHandler)
 		{
 		}
 	}
 }
-
+	

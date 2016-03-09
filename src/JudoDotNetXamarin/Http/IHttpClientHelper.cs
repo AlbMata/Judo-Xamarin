@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Net.Http;
 
 namespace JudoDotNetXamarin
 {
-	public class IHttpClientHelper
+	public interface IHttpClientHelper
 	{
-		public IHttpClientHelper ()
-		{
-		}
+		HttpMessageHandler MessageHandler { get; }
 	}
 }
 

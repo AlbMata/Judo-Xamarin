@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Net.Http;
+using JudoDotNetXamarin;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public class HttpClientHelperiOS
+	public class HttpClientHelper : IHttpClientHelper
 	{
-		public HttpClientHelperiOS ()
+		private HttpMessageHandler handler;
+		public HttpMessageHandler MessageHandler
 		{
+			get { return handler ?? (handler = new CFNetworkHandler()); }
 		}
 	}
 }
