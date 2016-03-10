@@ -155,9 +155,6 @@
     <Reference Include="FluentValidation">
       <HintPath>..\packages\FluentValidation.6.2.1.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
     </Reference>
-    <Reference Include="ModernHttpClient">
-      <HintPath>..\Components\modernhttpclient-2.4.2\lib\ios-unified\ModernHttpClient.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppDelegate.cs" />
@@ -185,11 +182,5 @@
       <Project>{5B807A92-C93B-41E2-A48C-B94D61363EFC}</Project>
       <Name>JudoDotNetXamarin</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <XamarinComponentReference Include="modernhttpclient">
-      <Version>2.4.2</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
   </ItemGroup>
 </Project>
