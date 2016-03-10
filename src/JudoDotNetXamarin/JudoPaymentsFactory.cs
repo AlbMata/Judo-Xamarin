@@ -8,6 +8,7 @@ using JudoPayDotNet;
 using JudoPayDotNet.Authentication;
 using JudoPayDotNet.Http;
 using JudoPayDotNet.Enums;
+using System.Net.Http;
 
 namespace JudoDotNetXamarin
 {
@@ -31,10 +32,10 @@ namespace JudoDotNetXamarin
                 baseUrl = SANDBOX_URL;
                 break;
             }
-
-            var httpClient = new HttpClientWrapper (new AuthorizationHandler (credentials,
-                                 XamarinLoggerFactory.Create (typeof(AuthorizationHandler))),
-                                 new VersioningHandler (Apiversionheader, API_VERSION));
+            IHttpClientHelper httpClientHelper = ServiceContainer.Resolve<IHttpClientHelper> ();
+            var nh = new NativeHandler (httpClientHelper.MessageHandler, credentials,
+                         XamarinLoggerFactory.Create (typeof(AuthorizationHandler)), Apiversionheader, API_VERSION);
+            HttpClientWrapper httpClient = new HttpClientWrapper (nh);
             var connection = new Connection (httpClient,
                                  XamarinLoggerFactory.Create,
                                  baseUrl);

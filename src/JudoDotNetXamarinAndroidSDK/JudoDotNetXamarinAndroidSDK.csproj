@@ -17,6 +17,7 @@
     <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
     <ReleaseVersion>2.3.1</ReleaseVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <AndroidApplication>false</AndroidApplication>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,13 +50,19 @@
       <HintPath>..\..\lib\JudoPayDotNet.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Serilog">
-      <HintPath>..\packages\Serilog.1.5.12\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\Serilog.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation">
-      <HintPath>..\packages\FluentValidation.6.0.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
+      <HintPath>..\packages\FluentValidation.6.2.1.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog">
+      <HintPath>..\packages\Serilog.1.5.14\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="ModernHttpClient">
+      <HintPath>..\packages\modernhttpclient.2.4.2\lib\MonoAndroid\ModernHttpClient.dll</HintPath>
+    </Reference>
+    <Reference Include="OkHttp">
+      <HintPath>..\packages\modernhttpclient.2.4.2\lib\MonoAndroid\OkHttp.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +100,7 @@
     <Compile Include="Activities\RegisterCardActivity.cs" />
     <Compile Include="Models\CardToken.cs" />
     <Compile Include="Judo.cs" />
+    <Compile Include="Http\HttpClientHelperAndroid.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -339,6 +347,7 @@
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Resources\Drawable-v21\" />
+    <Folder Include="Http\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JudoDotNetXamarin\JudoDotNetXamarin.csproj">

@@ -64,6 +64,9 @@
     <Compile Include="Helpers\ErrorExtensions.cs" />
     <Compile Include="Models\judoReceipt.cs" />
     <Compile Include="IJudo.cs" />
+    <Compile Include="Http\IHttpClientHelper.cs" />
+    <Compile Include="Http\NativeHandler.cs" />
+    <Compile Include="Helpers\ServiceContainer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configuration\" />
@@ -72,19 +75,23 @@
     <Folder Include="Delegates\" />
     <Folder Include="Clients\" />
     <Folder Include="Services\" />
+    <Folder Include="Http\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="JudoPayDotNet">
       <HintPath>..\..\lib\JudoPayDotNet.dll</HintPath>
     </Reference>
+    <Reference Include="ModernHttpClient">
+      <HintPath>..\..\samples\iOS\packages\modernhttpclient.2.4.2\lib\Portable-Net45+WinRT45+WP8+WPA81\ModernHttpClient.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Serilog">
-      <HintPath>..\packages\Serilog.1.5.12\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\Serilog.dll</HintPath>
+      <HintPath>..\packages\Serilog.1.5.14\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\Serilog.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation">
-      <HintPath>..\packages\FluentValidation.6.0.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
+      <HintPath>..\packages\FluentValidation.6.2.1.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

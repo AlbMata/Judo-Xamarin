@@ -223,6 +223,7 @@ namespace Android.Xamarin.SampleApp
             Judo.MaestroAccepted = true;
             Judo.RiskSignals = true;
 
+
             /*
             configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal
             configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal

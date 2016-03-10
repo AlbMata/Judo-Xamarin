@@ -20,7 +20,13 @@ namespace JudoDotNetXamarinAndroidSDK
         public NonUIMethods ()
         {
             factory = new ServiceFactory ();
+            try {
+                ServiceContainer.Resolve<IHttpClientHelper> ();
+            } catch {
+                ServiceContainer.Register<IHttpClientHelper> (new HttpClientHelper ());
+            }      
             _paymentService = factory.GetPaymentService (); 
+
         }
 
         public void Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)

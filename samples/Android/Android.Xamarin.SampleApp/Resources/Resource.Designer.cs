@@ -225,6 +225,7 @@ namespace Android.Xamarin.SampleApp
 			global::JudoDotNetXamarinAndroidSDK.Resource.String.hint_postcode = global::Android.Xamarin.SampleApp.Resource.String.hint_postcode;
 			global::JudoDotNetXamarinAndroidSDK.Resource.String.hint_start_date = global::Android.Xamarin.SampleApp.Resource.String.hint_start_date;
 			global::JudoDotNetXamarinAndroidSDK.Resource.String.issue_number = global::Android.Xamarin.SampleApp.Resource.String.issue_number;
+			global::JudoDotNetXamarinAndroidSDK.Resource.String.library_name = global::Android.Xamarin.SampleApp.Resource.String.library_name;
 			global::JudoDotNetXamarinAndroidSDK.Resource.String.msg_avs_info_others = global::Android.Xamarin.SampleApp.Resource.String.msg_avs_info_others;
 			global::JudoDotNetXamarinAndroidSDK.Resource.String.msg_card_no_invalid = global::Android.Xamarin.SampleApp.Resource.String.msg_card_no_invalid;
 			global::JudoDotNetXamarinAndroidSDK.Resource.String.msg_check_exp_date = global::Android.Xamarin.SampleApp.Resource.String.msg_check_exp_date;
@@ -956,215 +957,218 @@ namespace Android.Xamarin.SampleApp
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f06003b
+			public const int ApplicationName = 2131099707;
+			
 			// aapt resource value: 0x7f06003a
-			public const int ApplicationName = 2131099706;
-			
-			// aapt resource value: 0x7f060039
-			public const int Hello = 2131099705;
-			
-			// aapt resource value: 0x7f060009
-			public const int address_line1 = 2131099657;
+			public const int Hello = 2131099706;
 			
 			// aapt resource value: 0x7f06000a
-			public const int address_line2 = 2131099658;
+			public const int address_line1 = 2131099658;
 			
 			// aapt resource value: 0x7f06000b
-			public const int address_line3 = 2131099659;
-			
-			// aapt resource value: 0x7f06000d
-			public const int address_postcode = 2131099661;
+			public const int address_line2 = 2131099659;
 			
 			// aapt resource value: 0x7f06000c
-			public const int address_town = 2131099660;
-			
-			// aapt resource value: 0x7f060000
-			public const int app_name = 2131099648;
-			
-			// aapt resource value: 0x7f06003b
-			public const int app_name_ui = 2131099707;
-			
-			// aapt resource value: 0x7f06002b
-			public const int billing_country = 2131099691;
-			
-			// aapt resource value: 0x7f060010
-			public const int cancel = 2131099664;
-			
-			// aapt resource value: 0x7f060032
-			public const int card_no_obscured = 2131099698;
-			
-			// aapt resource value: 0x7f060008
-			public const int enter_card_cv2 = 2131099656;
-			
-			// aapt resource value: 0x7f060007
-			public const int enter_card_expiry = 2131099655;
-			
-			// aapt resource value: 0x7f060006
-			public const int enter_card_no = 2131099654;
-			
-			// aapt resource value: 0x7f060014
-			public const int help_amount_header = 2131099668;
-			
-			// aapt resource value: 0x7f060015
-			public const int help_amount_text = 2131099669;
-			
-			// aapt resource value: 0x7f06001c
-			public const int help_card_header = 2131099676;
-			
-			// aapt resource value: 0x7f06001d
-			public const int help_card_text = 2131099677;
-			
-			// aapt resource value: 0x7f06001f
-			public const int help_cv2_text = 2131099679;
-			
-			// aapt resource value: 0x7f06001a
-			public const int help_email_header = 2131099674;
-			
-			// aapt resource value: 0x7f06001b
-			public const int help_email_text = 2131099675;
-			
-			// aapt resource value: 0x7f06001e
-			public const int help_info = 2131099678;
-			
-			// aapt resource value: 0x7f060016
-			public const int help_judo_header = 2131099670;
-			
-			// aapt resource value: 0x7f060017
-			public const int help_judo_text = 2131099671;
-			
-			// aapt resource value: 0x7f060018
-			public const int help_mob_header = 2131099672;
-			
-			// aapt resource value: 0x7f060019
-			public const int help_mob_text = 2131099673;
-			
-			// aapt resource value: 0x7f060021
-			public const int help_postcode_text = 2131099681;
-			
-			// aapt resource value: 0x7f060020
-			public const int help_postcode_title = 2131099680;
-			
-			// aapt resource value: 0x7f060035
-			public const int hint_issue_number = 2131099701;
-			
-			// aapt resource value: 0x7f06002d
-			public const int hint_postcode = 2131099693;
-			
-			// aapt resource value: 0x7f06002f
-			public const int hint_start_date = 2131099695;
-			
-			// aapt resource value: 0x7f060034
-			public const int issue_number = 2131099700;
-			
-			// aapt resource value: 0x7f060038
-			public const int msg_avs_info_others = 2131099704;
-			
-			// aapt resource value: 0x7f060031
-			public const int msg_card_no_invalid = 2131099697;
-			
-			// aapt resource value: 0x7f060033
-			public const int msg_check_exp_date = 2131099699;
-			
-			// aapt resource value: 0x7f060037
-			public const int msg_check_issue_number = 2131099703;
-			
-			// aapt resource value: 0x7f060030
-			public const int msg_check_number = 2131099696;
-			
-			// aapt resource value: 0x7f060036
-			public const int msg_check_start_date = 2131099702;
-			
-			// aapt resource value: 0x7f06003e
-			public const int msg_payment_cancel = 2131099710;
-			
-			// aapt resource value: 0x7f06003f
-			public const int msg_payment_error = 2131099711;
-			
-			// aapt resource value: 0x7f06003c
-			public const int msg_payment_ok = 2131099708;
-			
-			// aapt resource value: 0x7f060044
-			public const int msg_preauth_error = 2131099716;
-			
-			// aapt resource value: 0x7f06003d
-			public const int msg_preauth_ok = 2131099709;
-			
-			// aapt resource value: 0x7f060041
-			public const int msg_reg_card_cancel = 2131099713;
-			
-			// aapt resource value: 0x7f060043
-			public const int msg_reg_card_error = 2131099715;
-			
-			// aapt resource value: 0x7f060042
-			public const int msg_reg_card_ok = 2131099714;
-			
-			// aapt resource value: 0x7f060040
-			public const int msg_transactions_error = 2131099712;
-			
-			// aapt resource value: 0x7f06000f
-			public const int ok = 2131099663;
-			
-			// aapt resource value: 0x7f060026
-			public const int payment = 2131099686;
-			
-			// aapt resource value: 0x7f060023
-			public const int payment_button = 2131099683;
-			
-			// aapt resource value: 0x7f060011
-			public const int payment_hint_amt = 2131099665;
-			
-			// aapt resource value: 0x7f060012
-			public const int payment_hint_cv2 = 2131099666;
-			
-			// aapt resource value: 0x7f060013
-			public const int payment_hint_enter_amt_with_currency = 2131099667;
-			
-			// aapt resource value: 0x7f060022
-			public const int payment_hint_judo = 2131099682;
-			
-			// aapt resource value: 0x7f06002c
-			public const int postcode = 2131099692;
-			
-			// aapt resource value: 0x7f060028
-			public const int preauth = 2131099688;
-			
-			// aapt resource value: 0x7f060025
-			public const int register_card = 2131099685;
-			
-			// aapt resource value: 0x7f060045
-			public const int sdk_version = 2131099717;
-			
-			// aapt resource value: 0x7f06002a
-			public const int secure3dtext = 2131099690;
-			
-			// aapt resource value: 0x7f060024
-			public const int security_message = 2131099684;
-			
-			// aapt resource value: 0x7f06002e
-			public const int start_date = 2131099694;
+			public const int address_line3 = 2131099660;
 			
 			// aapt resource value: 0x7f06000e
-			public const int submit = 2131099662;
+			public const int address_postcode = 2131099662;
+			
+			// aapt resource value: 0x7f06000d
+			public const int address_town = 2131099661;
 			
 			// aapt resource value: 0x7f060001
-			public const int title_payment = 2131099649;
+			public const int app_name = 2131099649;
 			
-			// aapt resource value: 0x7f060002
-			public const int title_payment_token = 2131099650;
+			// aapt resource value: 0x7f06003c
+			public const int app_name_ui = 2131099708;
 			
-			// aapt resource value: 0x7f060003
-			public const int title_pre_auth = 2131099651;
+			// aapt resource value: 0x7f06002c
+			public const int billing_country = 2131099692;
 			
-			// aapt resource value: 0x7f060004
-			public const int title_pre_auth_token = 2131099652;
+			// aapt resource value: 0x7f060011
+			public const int cancel = 2131099665;
 			
-			// aapt resource value: 0x7f060005
-			public const int title_register_card = 2131099653;
+			// aapt resource value: 0x7f060033
+			public const int card_no_obscured = 2131099699;
+			
+			// aapt resource value: 0x7f060009
+			public const int enter_card_cv2 = 2131099657;
+			
+			// aapt resource value: 0x7f060008
+			public const int enter_card_expiry = 2131099656;
+			
+			// aapt resource value: 0x7f060007
+			public const int enter_card_no = 2131099655;
+			
+			// aapt resource value: 0x7f060015
+			public const int help_amount_header = 2131099669;
+			
+			// aapt resource value: 0x7f060016
+			public const int help_amount_text = 2131099670;
+			
+			// aapt resource value: 0x7f06001d
+			public const int help_card_header = 2131099677;
+			
+			// aapt resource value: 0x7f06001e
+			public const int help_card_text = 2131099678;
+			
+			// aapt resource value: 0x7f060020
+			public const int help_cv2_text = 2131099680;
+			
+			// aapt resource value: 0x7f06001b
+			public const int help_email_header = 2131099675;
+			
+			// aapt resource value: 0x7f06001c
+			public const int help_email_text = 2131099676;
+			
+			// aapt resource value: 0x7f06001f
+			public const int help_info = 2131099679;
+			
+			// aapt resource value: 0x7f060017
+			public const int help_judo_header = 2131099671;
+			
+			// aapt resource value: 0x7f060018
+			public const int help_judo_text = 2131099672;
+			
+			// aapt resource value: 0x7f060019
+			public const int help_mob_header = 2131099673;
+			
+			// aapt resource value: 0x7f06001a
+			public const int help_mob_text = 2131099674;
+			
+			// aapt resource value: 0x7f060022
+			public const int help_postcode_text = 2131099682;
+			
+			// aapt resource value: 0x7f060021
+			public const int help_postcode_title = 2131099681;
+			
+			// aapt resource value: 0x7f060036
+			public const int hint_issue_number = 2131099702;
+			
+			// aapt resource value: 0x7f06002e
+			public const int hint_postcode = 2131099694;
+			
+			// aapt resource value: 0x7f060030
+			public const int hint_start_date = 2131099696;
+			
+			// aapt resource value: 0x7f060035
+			public const int issue_number = 2131099701;
+			
+			// aapt resource value: 0x7f060000
+			public const int library_name = 2131099648;
+			
+			// aapt resource value: 0x7f060039
+			public const int msg_avs_info_others = 2131099705;
+			
+			// aapt resource value: 0x7f060032
+			public const int msg_card_no_invalid = 2131099698;
+			
+			// aapt resource value: 0x7f060034
+			public const int msg_check_exp_date = 2131099700;
+			
+			// aapt resource value: 0x7f060038
+			public const int msg_check_issue_number = 2131099704;
+			
+			// aapt resource value: 0x7f060031
+			public const int msg_check_number = 2131099697;
+			
+			// aapt resource value: 0x7f060037
+			public const int msg_check_start_date = 2131099703;
+			
+			// aapt resource value: 0x7f06003f
+			public const int msg_payment_cancel = 2131099711;
+			
+			// aapt resource value: 0x7f060040
+			public const int msg_payment_error = 2131099712;
+			
+			// aapt resource value: 0x7f06003d
+			public const int msg_payment_ok = 2131099709;
+			
+			// aapt resource value: 0x7f060045
+			public const int msg_preauth_error = 2131099717;
+			
+			// aapt resource value: 0x7f06003e
+			public const int msg_preauth_ok = 2131099710;
+			
+			// aapt resource value: 0x7f060042
+			public const int msg_reg_card_cancel = 2131099714;
+			
+			// aapt resource value: 0x7f060044
+			public const int msg_reg_card_error = 2131099716;
+			
+			// aapt resource value: 0x7f060043
+			public const int msg_reg_card_ok = 2131099715;
+			
+			// aapt resource value: 0x7f060041
+			public const int msg_transactions_error = 2131099713;
+			
+			// aapt resource value: 0x7f060010
+			public const int ok = 2131099664;
 			
 			// aapt resource value: 0x7f060027
-			public const int token_payment = 2131099687;
+			public const int payment = 2131099687;
+			
+			// aapt resource value: 0x7f060024
+			public const int payment_button = 2131099684;
+			
+			// aapt resource value: 0x7f060012
+			public const int payment_hint_amt = 2131099666;
+			
+			// aapt resource value: 0x7f060013
+			public const int payment_hint_cv2 = 2131099667;
+			
+			// aapt resource value: 0x7f060014
+			public const int payment_hint_enter_amt_with_currency = 2131099668;
+			
+			// aapt resource value: 0x7f060023
+			public const int payment_hint_judo = 2131099683;
+			
+			// aapt resource value: 0x7f06002d
+			public const int postcode = 2131099693;
 			
 			// aapt resource value: 0x7f060029
-			public const int token_preauth = 2131099689;
+			public const int preauth = 2131099689;
+			
+			// aapt resource value: 0x7f060026
+			public const int register_card = 2131099686;
+			
+			// aapt resource value: 0x7f060046
+			public const int sdk_version = 2131099718;
+			
+			// aapt resource value: 0x7f06002b
+			public const int secure3dtext = 2131099691;
+			
+			// aapt resource value: 0x7f060025
+			public const int security_message = 2131099685;
+			
+			// aapt resource value: 0x7f06002f
+			public const int start_date = 2131099695;
+			
+			// aapt resource value: 0x7f06000f
+			public const int submit = 2131099663;
+			
+			// aapt resource value: 0x7f060002
+			public const int title_payment = 2131099650;
+			
+			// aapt resource value: 0x7f060003
+			public const int title_payment_token = 2131099651;
+			
+			// aapt resource value: 0x7f060004
+			public const int title_pre_auth = 2131099652;
+			
+			// aapt resource value: 0x7f060005
+			public const int title_pre_auth_token = 2131099653;
+			
+			// aapt resource value: 0x7f060006
+			public const int title_register_card = 2131099654;
+			
+			// aapt resource value: 0x7f060028
+			public const int token_payment = 2131099688;
+			
+			// aapt resource value: 0x7f06002a
+			public const int token_preauth = 2131099690;
 			
 			static String()
 			{
