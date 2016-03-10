@@ -26,6 +26,7 @@ namespace Android.Xamarin.SampleApp
 		
 		public static void UpdateIdValues()
 		{
+			global::ModernHttpClient.Resource.String.library_name = global::Android.Xamarin.SampleApp.Resource.String.library_name;
 			global::JudoDotNetXamarinAndroidSDK.Resource.Animation.fade_in = global::Android.Xamarin.SampleApp.Resource.Animation.fade_in;
 			global::JudoDotNetXamarinAndroidSDK.Resource.Animation.fade_in_out = global::Android.Xamarin.SampleApp.Resource.Animation.fade_in_out;
 			global::JudoDotNetXamarinAndroidSDK.Resource.Animation.fade_out = global::Android.Xamarin.SampleApp.Resource.Animation.fade_out;
@@ -225,6 +226,7 @@ namespace Android.Xamarin.SampleApp
 			global::JudoDotNetXamarinAndroidSDK.Resource.String.hint_postcode = global::Android.Xamarin.SampleApp.Resource.String.hint_postcode;
 			global::JudoDotNetXamarinAndroidSDK.Resource.String.hint_start_date = global::Android.Xamarin.SampleApp.Resource.String.hint_start_date;
 			global::JudoDotNetXamarinAndroidSDK.Resource.String.issue_number = global::Android.Xamarin.SampleApp.Resource.String.issue_number;
+			global::JudoDotNetXamarinAndroidSDK.Resource.String.library_name = global::Android.Xamarin.SampleApp.Resource.String.library_name;
 			global::JudoDotNetXamarinAndroidSDK.Resource.String.msg_avs_info_others = global::Android.Xamarin.SampleApp.Resource.String.msg_avs_info_others;
 			global::JudoDotNetXamarinAndroidSDK.Resource.String.msg_card_no_invalid = global::Android.Xamarin.SampleApp.Resource.String.msg_card_no_invalid;
 			global::JudoDotNetXamarinAndroidSDK.Resource.String.msg_check_exp_date = global::Android.Xamarin.SampleApp.Resource.String.msg_check_exp_date;
@@ -956,11 +958,11 @@ namespace Android.Xamarin.SampleApp
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f06003a
-			public const int ApplicationName = 2131099706;
+			// aapt resource value: 0x7f06003b
+			public const int ApplicationName = 2131099707;
 			
-			// aapt resource value: 0x7f060039
-			public const int Hello = 2131099705;
+			// aapt resource value: 0x7f06003a
+			public const int Hello = 2131099706;
 			
 			// aapt resource value: 0x7f060009
 			public const int address_line1 = 2131099657;
@@ -980,8 +982,8 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f060000
 			public const int app_name = 2131099648;
 			
-			// aapt resource value: 0x7f06003b
-			public const int app_name_ui = 2131099707;
+			// aapt resource value: 0x7f06003c
+			public const int app_name_ui = 2131099708;
 			
 			// aapt resource value: 0x7f06002b
 			public const int billing_country = 2131099691;
@@ -1055,6 +1057,9 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f060034
 			public const int issue_number = 2131099700;
 			
+			// aapt resource value: 0x7f060039
+			public const int library_name = 2131099705;
+			
 			// aapt resource value: 0x7f060038
 			public const int msg_avs_info_others = 2131099704;
 			
@@ -1073,32 +1078,32 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f060036
 			public const int msg_check_start_date = 2131099702;
 			
-			// aapt resource value: 0x7f06003e
-			public const int msg_payment_cancel = 2131099710;
-			
 			// aapt resource value: 0x7f06003f
-			public const int msg_payment_error = 2131099711;
-			
-			// aapt resource value: 0x7f06003c
-			public const int msg_payment_ok = 2131099708;
-			
-			// aapt resource value: 0x7f060044
-			public const int msg_preauth_error = 2131099716;
-			
-			// aapt resource value: 0x7f06003d
-			public const int msg_preauth_ok = 2131099709;
-			
-			// aapt resource value: 0x7f060041
-			public const int msg_reg_card_cancel = 2131099713;
-			
-			// aapt resource value: 0x7f060043
-			public const int msg_reg_card_error = 2131099715;
-			
-			// aapt resource value: 0x7f060042
-			public const int msg_reg_card_ok = 2131099714;
+			public const int msg_payment_cancel = 2131099711;
 			
 			// aapt resource value: 0x7f060040
-			public const int msg_transactions_error = 2131099712;
+			public const int msg_payment_error = 2131099712;
+			
+			// aapt resource value: 0x7f06003d
+			public const int msg_payment_ok = 2131099709;
+			
+			// aapt resource value: 0x7f060045
+			public const int msg_preauth_error = 2131099717;
+			
+			// aapt resource value: 0x7f06003e
+			public const int msg_preauth_ok = 2131099710;
+			
+			// aapt resource value: 0x7f060042
+			public const int msg_reg_card_cancel = 2131099714;
+			
+			// aapt resource value: 0x7f060044
+			public const int msg_reg_card_error = 2131099716;
+			
+			// aapt resource value: 0x7f060043
+			public const int msg_reg_card_ok = 2131099715;
+			
+			// aapt resource value: 0x7f060041
+			public const int msg_transactions_error = 2131099713;
 			
 			// aapt resource value: 0x7f06000f
 			public const int ok = 2131099663;
@@ -1130,8 +1135,8 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f060025
 			public const int register_card = 2131099685;
 			
-			// aapt resource value: 0x7f060045
-			public const int sdk_version = 2131099717;
+			// aapt resource value: 0x7f060046
+			public const int sdk_version = 2131099718;
 			
 			// aapt resource value: 0x7f06002a
 			public const int secure3dtext = 2131099690;

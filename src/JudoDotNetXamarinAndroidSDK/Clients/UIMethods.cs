@@ -36,6 +36,13 @@ namespace JudoDotNetXamarinAndroidSDK
 
                 this.StartActivityForResult (i, Int32.Parse (requestCode));
             }
+             
+            try {
+                ServiceContainer.Resolve<IHttpClientHelper> ();
+            } catch {
+                ServiceContainer.Register<IHttpClientHelper> (new HttpClientHelper ());
+            }          
+ 
         }
 
         public void Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
