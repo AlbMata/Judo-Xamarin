@@ -86,9 +86,12 @@ namespace JudoDotNetXamariniOSSDK
         internal static IPaymentService GetInitialService ()
         {
     
-            if (!ServiceContainer.IsRegistered <IHttpClientHelper> ()) {
+            try {
+                ServiceContainer.Resolve<IHttpClientHelper> ();
+            } catch {
                 ServiceContainer.Register<IHttpClientHelper> (new HttpClientHelper ());
-            }          
+            }
+
             return serviceFactory.GetPaymentService ();
         }
 

@@ -12,54 +12,38 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.using System;
+
+
 using System;
 using System.Collections.Generic;
 
 namespace JudoDotNetXamarin
 {
-    /// <summary>
-    /// A simple service container implementation, singleton only
-    /// </summary>
     public static class ServiceContainer
     {
-        static readonly Dictionary<Type, Lazy<object>> Services = new Dictionary<Type, Lazy<object>> ();
-        static readonly Stack<Dictionary<Type, object>> ScopedServices = new Stack<Dictionary<Type, object>> ();
+        static readonly Dictionary <Type,Lazy<object>> Services = new Dictionary <Type,Lazy<object>> ();
+        static readonly Stack<Dictionary <Type,object>> ScopedServices = new Stack<Dictionary <Type,object>> ();
 
-        /// <summary>
-        /// Register the specified service with an instance
-        /// </summary>
-        public static void Register<T> (T service)
+        public static  void Register<T> (T service)
         {
             Services [typeof(T)] = new Lazy<object> (() => service);
         }
 
-        /// <summary>
-        /// Register the specified service for a class with a default constructor
-        /// </summary>
         public static void Register<T> () where T : new()
         {
             Services [typeof(T)] = new Lazy<object> (() => new T ());
         }
 
-        /// <summary>
-        /// Register the specified service with a callback to be invoked when requested
-        /// </summary>
         public static void Register<T> (Func<T> function)
         {
             Services [typeof(T)] = new Lazy<object> (() => function ());
         }
 
-        /// <summary>
-        /// Register the specified service with an instance
-        /// </summary>
         public static void Register (Type type, object service)
         {
             Services [type] = new Lazy<object> (() => service);
         }
 
-        /// <summary>
-        /// Register the specified service with a callback to be invoked when requested
-        /// </summary>
         public static void Register (Type type, Func<object> function)
         {
             Services [type] = new Lazy<object> (function);
@@ -141,21 +125,9 @@ namespace JudoDotNetXamarin
             ScopedServices.Clear ();
         }
 
-        public static bool IsRegistered<T> ()
-        {
-            if (ScopedServices.Count > 0) {
-                var innerServices = ScopedServices.Peek ();
-                if (innerServices != null && innerServices.ContainsKey (typeof(T))) {
-                    return true;
-                } else {
-                    return false;
-                }
+       
 
-            }
-            {
-                return false;
-            }
-        }
+
     }
 }
 
