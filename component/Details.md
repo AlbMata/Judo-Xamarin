@@ -15,7 +15,7 @@ Or take a look at the code yourself [Github](https://github.com/JudoPay/Judo-Xam
 
 # Release 
 
-Version 2.3.1
+Version 2.3.2
 
-- Bug fixes
-- UX updates
+- TLS 1.2 support (To meet industry-wide security updates)
+- Improved Transaction speed
