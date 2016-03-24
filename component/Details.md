@@ -15,7 +15,6 @@ Or take a look at the code yourself [Github](https://github.com/JudoPay/Judo-Xam
 
 # Release 
 
-Version 2.3.1
+Version 2.3.3
 
 - Bug fixes
-- UX updates
