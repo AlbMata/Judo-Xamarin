@@ -38,7 +38,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
                     var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
                     failure (error);
                 } else {
-                    _paymentService.MakeApplePayment (viewModel, success, failure, vc as UINavigationController, type);
+                    _paymentService.MakeApplePayment (viewModel, success, failure, vc, type);
                 }
 			
             } catch (Exception ex) {
@@ -63,6 +63,10 @@ namespace JudoDotNetXamariniOSSDK.Clients
             var vc = window.RootViewController;
             while (vc.PresentedViewController != null) {
                 vc = vc.PresentedViewController;
+            }
+            if (vc is UISplitViewController) {
+                var splitView = vc as UISplitViewController;
+                return splitView.ViewControllers [0];
             }
             return vc;
         }
