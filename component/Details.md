@@ -18,3 +18,4 @@ Or take a look at the code yourself [Github](https://github.com/JudoPay/Judo-Xam
 Version 2.3.3
 
 - Bug fixes
+- Apple pay now only requires TotalSummaryItem to function, facilitating single item billing

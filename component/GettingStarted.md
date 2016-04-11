@@ -205,7 +205,7 @@ ApplePay
 ```
 Judo.Instance.MakeApplePreAuth (applePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
 ```
-
+**Please note:** Apple Pay is only supported when targeting the Live Enviroment
 
 # Customizing the judoPay UI
 
