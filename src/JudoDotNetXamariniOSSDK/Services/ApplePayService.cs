@@ -54,7 +54,7 @@ namespace JudoDotNetXamariniOSSDK.Services
             } catch (Exception e) {
                 Console.WriteLine (e.InnerException.ToString ());
 
-                var judoError = new JudoError () { Exception = e };
+                var judoError = new JudoError () { Exception = e.InnerException };
                 failure (judoError);
             }
         }
