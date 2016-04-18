@@ -25,7 +25,7 @@ namespace JudoDotNetXamariniOSSDK.Services
             _clientService = new ClientService ();
         }
 
-        public  void MakeApplePayment (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController controller, ApplePaymentType type)
+        public  void MakeApplePayment (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UIViewController rootView, ApplePaymentType type)
         {
             try {
                 PKPaymentRequest request = new PKPaymentRequest ();
@@ -49,12 +49,12 @@ namespace JudoDotNetXamariniOSSDK.Services
 
 
                 PKPaymentAuthorizationViewController pkController = new PKPaymentAuthorizationViewController (request){ Delegate = pkDelegate };
-                controller.PresentViewController (pkController, true, null);
+                rootView.PresentViewController (pkController, true, null);
 
             } catch (Exception e) {
                 Console.WriteLine (e.InnerException.ToString ());
 
-                var judoError = new JudoError () { Exception = e };
+                var judoError = new JudoError () { Exception = e.InnerException };
                 failure (judoError);
             }
         }
