@@ -155,8 +155,11 @@ var summaryItems = new PKPaymentSummaryItem[] {
 				
 				CurrencyCode = new NSString ("GBP"),
 				CountryCode = new NSString (@"GB"),
-				SupportedNetworks = new NSString[3]{ new NSString ("Visa"),
-				new NSString ("MasterCard"), new NSString ("Amex") },
+				SupportedNetworks = new NSString[3]{
+			            new NSString (PassKit.PKPaymentNetwork.Visa),
+			            new NSString (PassKit.PKPaymentNetwork.MasterCard),
+			            new NSString (PassKit.PKPaymentNetwork.Amex)
+                		},
 				SummaryItems = summaryItems,
 				TotalSummaryItem = new PKPaymentSummaryItem () {
 					Amount = new NSDecimalNumber ("1.00"),//total of the previous items
