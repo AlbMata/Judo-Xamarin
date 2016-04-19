@@ -90,9 +90,14 @@ namespace JudoDotNetXamarinAndroidSDK
 
         public Judo ()
         {
-
+            UIMode = true;
+            RiskSignals = true;
+            AmExAccepted = true;
+            MaestroAccepted = true;
+           
             _rootCheck = new RootCheck ();
             isRooted = _rootCheck.IsRooted ();
+
         }
 
         private static JudoAndroidSDKAPI _judoSdkApi;

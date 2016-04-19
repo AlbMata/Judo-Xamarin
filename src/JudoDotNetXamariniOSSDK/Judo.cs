@@ -67,6 +67,9 @@ namespace JudoDotNetXamariniOSSDK
             // setting up UI mode by default
             UIMode = true;
             Instance.RiskSignals = true;
+            Instance.AmExAccepted = true;
+            Instance.MaestroAccepted = true;
+
         }
 
         internal static void SetUserAgent ()

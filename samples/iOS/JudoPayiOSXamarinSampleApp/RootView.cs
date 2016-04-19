@@ -195,6 +195,7 @@ namespace JudoPayiOSXamarinSampleApp
             _menu = new SlideUpMenu (new RectangleF (0, (float)this.View.Frame.Bottom - 40f, (float)this.View.Frame.Width, 448f));
             _menu.AwakeFromNib ();
             _menu.AutoresizingMask = UIViewAutoresizing.FlexibleMargins;
+            _menu.MenuClosed += () => SetItemList ();
             this.View.AddSubview (_menu);
         }
 
@@ -216,6 +217,11 @@ namespace JudoPayiOSXamarinSampleApp
             return cardPayment;
         }
 
+        private void SetItemList ()
+        {
+            SetUpTableView ();
+        }
+
         ApplePayViewModel GetApplePayViewModel ()
         {
             var summaryItems = new PKPaymentSummaryItem[] {
@@ -230,15 +236,15 @@ namespace JudoPayiOSXamarinSampleApp
 
                 }
             };
-			
+            var test = PassKit.PKPaymentNetwork.Amex;
             var applePayment = new ApplePayViewModel {
 				
                 CurrencyCode = new NSString ("GBP"),
                 CountryCode = new NSString (@"GB"),
                 SupportedNetworks = new NSString[3] {
-                    new NSString ("Visa"),
-                    new NSString ("MasterCard"),
-                    new NSString ("Amex")
+                    new NSString (PassKit.PKPaymentNetwork.Visa),
+                    new NSString (PassKit.PKPaymentNetwork.MasterCard),
+                    new NSString (PassKit.PKPaymentNetwork.Amex)
                 },
                 SummaryItems = summaryItems,
                 TotalSummaryItem = new PKPaymentSummaryItem () {

@@ -218,11 +218,7 @@ namespace Android.Xamarin.SampleApp
             //setting for Sandnox
             configInstance.Environment = JudoEnvironment.Live;
             Judo.UIMode = true;
-            Judo.AmExAccepted = true;
-            Judo.AVSEnabled = true;
-            Judo.MaestroAccepted = true;
-            Judo.RiskSignals = true;
-
+//          Judo.AVSEnabled = true;
 
             /*
             configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal

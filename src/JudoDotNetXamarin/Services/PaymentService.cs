@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using JudoDotNetXamarin;
 using JudoPayDotNet;
 using JudoPayDotNet.Models;
-using JudoDotNetXamarin;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo ("JudoDotNetXamariniOSSDK")]

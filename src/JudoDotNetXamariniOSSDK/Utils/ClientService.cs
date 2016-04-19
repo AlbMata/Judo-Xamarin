@@ -7,6 +7,7 @@ using PassKit;
 using UIKit;
 using JudoDotNetXamarin;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 
 #if __UNIFIED__
@@ -63,13 +64,17 @@ namespace JudoDotNetXamariniOSSDK
 
         public  bool ApplePayAvailable {
             get {
-                NSString[] paymentNetworks = new NSString[] {
-                    new NSString (@"Amex"),
-                    new NSString (@"MasterCard"),
-                    new NSString (@"Visa")
-                };
+                
+                List<NSString> paymentNetworks = new List<NSString> ();
+                paymentNetworks.Add (PassKit.PKPaymentNetwork.Visa);
+                paymentNetworks.Add (PassKit.PKPaymentNetwork.MasterCard);
 
-                if (PKPaymentAuthorizationViewController.CanMakePayments && PKPaymentAuthorizationViewController.CanMakePaymentsUsingNetworks (paymentNetworks)) {
+                if (Judo.Instance.AmExAccepted) {
+                    paymentNetworks.Add (PassKit.PKPaymentNetwork.Amex);
+  
+                }   
+
+                if (PKPaymentAuthorizationViewController.CanMakePayments && PKPaymentAuthorizationViewController.CanMakePaymentsUsingNetworks (paymentNetworks.ToArray ())) {
                     return true;
                 } else {
 
