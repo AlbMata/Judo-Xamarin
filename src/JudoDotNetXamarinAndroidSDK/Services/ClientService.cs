@@ -5,13 +5,13 @@ using Android.Runtime;
 using Android.Telephony;
 using Android.Util;
 using Java.Lang;
-using Java.Util;
-using String = System.String;
 using JudoDotNetXamarin;
 using JudoDotNetXamarinAndroidSDK.Utils;
-using System;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using JudoShieldAndroid;
+using JudoPayDotNet.Models;
+using System.Drawing;
 
 namespace JudoDotNetXamarinAndroidSDK
 {
@@ -30,7 +30,8 @@ namespace JudoDotNetXamarinAndroidSDK
             var clientDetails = new JudoDotNetXamarin.ClientDetails ();
 
             clientDetails.OS = "android " + Build.VERSION.SdkInt;
-            clientDetails.DeviceId = new DeviceUuidFactory (context).GetDeviceUuid ();
+            clientDetails.KDeviceId = JudoShield.GetKDeviceIdentifier ();
+            clientDetails.VDeviceId = JudoShield.GetVDeviceIdentifier ();
             clientDetails.DeviceModel = Build.Model;
             clientDetails.Serial = Build.Serial;
 
@@ -51,7 +52,25 @@ namespace JudoDotNetXamarinAndroidSDK
 
             clientDetails.SslPinningEnabled = Judo.SSLPinningEnabled;
 
-            return  JObject.FromObject (clientDetails);
+            return JObject.FromObject (clientDetails);
+        }
+
+        public ConsumerLocationModel GetDeviceLocation ()
+        {
+            PointF location = JudoShield.GetDeviceLocation ();
+
+            if (location != null) {
+                return new ConsumerLocationModel {
+                    Longitude = (decimal)location.X,
+                    Latitude = (decimal)location.Y
+                };
+            }
+            return new ConsumerLocationModel {
+                Longitude = 0,
+                Latitude = 0
+            };
+
+
         }
 
         public string GetSDKVersion ()
@@ -65,9 +84,9 @@ namespace JudoDotNetXamarinAndroidSDK
             } catch (System.Exception e) {
                 return "Xamarin-Android-" + "UNKNOWN-AssembleyNotFound";
             }
-           
+
         }
-			
+
     }
 }
 

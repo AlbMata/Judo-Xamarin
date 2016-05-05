@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using JudoDotNetXamarin;
-using JudoDotNetXamariniOSSDK;
 using JudoDotNetXamariniOSSDK.Clients;
 using JudoDotNetXamariniOSSDK.Factories;
 using JudoDotNetXamariniOSSDK.Services;
 using JudoDotNetXamariniOSSDK.ViewModels;
-using JudoPayDotNet.Models;
-using Newtonsoft.Json.Linq;
+using JudoShieldiOS;
 using UIKit;
-using JudoShieldXamarin;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -22,7 +17,7 @@ namespace JudoDotNetXamariniOSSDK
         /// <summary>
         /// Enable 3D security process
         /// </summary>
-        public bool ThreeDSecureEnabled{ get; set; }
+        public bool ThreeDSecureEnabled { get; set; }
 
         /// <summary>
         /// Enable/Disable AVS check
@@ -44,7 +39,7 @@ namespace JudoDotNetXamariniOSSDK
         /// Enable/Disable risk signal to pass fruad monitoring device data
         /// default is true
         /// </summary>
-        public bool RiskSignals{ get; set; }
+        public bool RiskSignals { get; set; }
 
         /// <summary>
         /// SSLPinningEnabled
@@ -54,7 +49,7 @@ namespace JudoDotNetXamariniOSSDK
         public bool AllowRooted { get; set; }
 
 
-       
+
 
         private static readonly Lazy<Judo> _singleton = new Lazy<Judo> (() => new Judo ());
 
@@ -74,7 +69,7 @@ namespace JudoDotNetXamariniOSSDK
 
         internal static void SetUserAgent ()
         {
-			
+
         }
 
         public static bool ShouldCheckUserAgent ()
@@ -88,7 +83,7 @@ namespace JudoDotNetXamariniOSSDK
 
         internal static IPaymentService GetInitialService ()
         {
-    
+
             try {
                 ServiceContainer.Resolve<IHttpClientHelper> ();
             } catch {
@@ -99,7 +94,7 @@ namespace JudoDotNetXamariniOSSDK
         }
 
         private static readonly IApplePayService ApplePaymentService = appleServiceFactory.GetApplePaymentService ();
-        private  IApplePayMethods _applePayMethods = new ApplePayMethods (ApplePaymentService);
+        private IApplePayMethods _applePayMethods = new ApplePayMethods (ApplePaymentService);
         private static IJudoSDKApi _judoSdkApi;
 
         private static bool _uiMode { get; set; }
@@ -154,7 +149,7 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="success">Callback for success transaction</param>
         /// <param name="failure">Callback for fail transaction</param>
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
-        public  void PreAuth (PaymentViewModel preAuthorisation, JudoSuccessCallback success, JudoFailureCallback failure)
+        public void PreAuth (PaymentViewModel preAuthorisation, JudoSuccessCallback success, JudoFailureCallback failure)
         {
             RootCheck (failure);
 
@@ -220,7 +215,7 @@ namespace JudoDotNetXamariniOSSDK
             RootCheck (failure);
 
             _applePayMethods.ApplePayment (payment, success, failure, ApplePaymentType.Payment);
-		
+
         }
 
         public void MakeApplePreAuth (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
@@ -231,7 +226,7 @@ namespace JudoDotNetXamariniOSSDK
 
         }
 
-	
+
         UIViewController GetCurrentViewController ()
         {
             var window = UIApplication.SharedApplication.KeyWindow;

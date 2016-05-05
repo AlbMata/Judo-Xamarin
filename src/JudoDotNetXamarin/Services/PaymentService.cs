@@ -11,7 +11,7 @@ namespace JudoDotNetXamarin
 {
     internal class PaymentService : IPaymentService
     {
-        private	JudoPayApi _judoAPI;
+        private JudoPayApi _judoAPI;
 
         public PaymentService (JudoPayApi judoAPI)
         {
@@ -36,6 +36,7 @@ namespace JudoDotNetXamarin
                 IssueNumber = paymentViewModel.Card.IssueNumber,
                 YourPaymentMetaData = paymentViewModel.YourPaymentMetaData,
                 ClientDetails = clientService.GetClientDetails (),
+                ConsumerLocation = clientService.GetDeviceLocation (),
                 Currency = paymentViewModel.Currency,
                 UserAgent = clientService.GetSDKVersion ()
             };
@@ -47,7 +48,7 @@ namespace JudoDotNetXamarin
         }
 
         public async Task<IResult<ITransactionResult>> PreAuthoriseCard (PaymentViewModel authorisation, IClientService clientService)
-        {      
+        {
             JudoConfiguration.Instance.Validate ();
             CardPaymentModel payment = new CardPaymentModel {
                 JudoId = (String.IsNullOrWhiteSpace (authorisation.JudoID) ? JudoConfiguration.Instance.JudoId : authorisation.JudoID),
@@ -64,6 +65,7 @@ namespace JudoDotNetXamarin
                 IssueNumber = authorisation.Card.IssueNumber,
                 YourPaymentMetaData = authorisation.YourPaymentMetaData,
                 ClientDetails = clientService.GetClientDetails (),
+                ConsumerLocation = clientService.GetDeviceLocation (),
                 UserAgent = clientService.GetSDKVersion (),
                 Currency = authorisation.Currency
             };
@@ -84,16 +86,17 @@ namespace JudoDotNetXamarin
                 ConsumerToken = tokenPayment.ConsumerToken,
                 YourPaymentMetaData = tokenPayment.YourPaymentMetaData,
                 ClientDetails = clientService.GetClientDetails (),
+                ConsumerLocation = clientService.GetDeviceLocation (),
                 UserAgent = clientService.GetSDKVersion ()
             };
             Task<IResult<ITransactionResult>> task = _judoAPI.Payments.Create (payment);
             return await task;
-    
+
         }
 
         public async Task<IResult<ITransactionResult>> MakeTokenPreAuthorisation (TokenPaymentViewModel tokenPayment, IClientService clientService)
         {
-          
+
             JudoConfiguration.Instance.Validate ();
             TokenPaymentModel payment = new TokenPaymentModel {
                 JudoId = (String.IsNullOrWhiteSpace (tokenPayment.JudoID) ? JudoConfiguration.Instance.JudoId : tokenPayment.JudoID),
@@ -102,11 +105,12 @@ namespace JudoDotNetXamarin
                 CardToken = tokenPayment.Token,
                 CV2 = tokenPayment.CV2,
                 ConsumerToken = tokenPayment.ConsumerToken,
+                ConsumerLocation = clientService.GetDeviceLocation (),
                 YourPaymentMetaData = tokenPayment.YourPaymentMetaData,
                 ClientDetails = clientService.GetClientDetails (),
                 UserAgent = clientService.GetSDKVersion ()
             };
-           
+
             Task<IResult<ITransactionResult>> task = _judoAPI.PreAuths.Create (payment);
             return await task;
         }
@@ -114,9 +118,9 @@ namespace JudoDotNetXamarin
         public async Task<IResult<ITransactionResult>> RegisterCard (PaymentViewModel payment, IClientService clientService)
         {
 
-          
+
             JudoConfiguration.Instance.Validate ();
-            var registerCard = new CardPaymentModel () {                 
+            var registerCard = new CardPaymentModel () {
                 JudoId = (String.IsNullOrWhiteSpace (payment.JudoID) ? JudoConfiguration.Instance.JudoId : payment.JudoID),
                 YourConsumerReference = (String.IsNullOrWhiteSpace (payment.ConsumerReference) ? ("Consumer:" + JudoConfiguration.Instance.JudoId) : payment.ConsumerReference),
                 Amount = payment.Amount,
@@ -129,6 +133,7 @@ namespace JudoDotNetXamarin
                 },
                 StartDate = payment.Card.StartDate,
                 IssueNumber = payment.Card.IssueNumber,
+                ConsumerLocation = clientService.GetDeviceLocation (),
                 YourPaymentMetaData = payment.YourPaymentMetaData,
                 ClientDetails = clientService.GetClientDetails (),
                 UserAgent = clientService.GetSDKVersion (),
@@ -137,7 +142,7 @@ namespace JudoDotNetXamarin
 
             Task<IResult<ITransactionResult>> task = _judoAPI.RegisterCards.Create (registerCard);
             return await task;
-          
+
         }
 
         public async Task<IResult<ITransactionResult>> CompleteDSecure (long receiptID, string paRes, string md)
@@ -149,7 +154,7 @@ namespace JudoDotNetXamarin
                 Task<IResult<PaymentReceiptModel>> task = _judoAPI.ThreeDs.Complete3DSecure (receiptID, model);
                 return await task;
             } catch (Exception e) {
-                var error = new JudoError () { 
+                var error = new JudoError () {
                     Exception = e,
                     ApiError = new JudoPayDotNet.Errors.ModelError () {
                         Message = e.InnerException.ToString ()
@@ -158,7 +163,7 @@ namespace JudoDotNetXamarin
                 throw error;
             }
         }
-       
+
 
     }
 }

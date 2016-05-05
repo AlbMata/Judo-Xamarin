@@ -1,6 +1,7 @@
 ﻿using System;
 using JudoDotNetXamarin;
 using Newtonsoft.Json.Linq;
+using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamarin
 {
@@ -9,6 +10,8 @@ namespace JudoDotNetXamarin
         JObject GetClientDetails ();
 
         string GetSDKVersion ();
+
+        ConsumerLocationModel GetDeviceLocation ();
     }
 }
 

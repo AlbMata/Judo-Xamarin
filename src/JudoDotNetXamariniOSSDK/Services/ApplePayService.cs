@@ -4,7 +4,6 @@ using Foundation;
 using JudoDotNetXamarin;
 using JudoDotNetXamariniOSSDK.Controllers;
 using JudoDotNetXamariniOSSDK.Delegates;
-using JudoDotNetXamariniOSSDK;
 using JudoDotNetXamariniOSSDK.ViewModels;
 using JudoPayDotNet;
 using JudoPayDotNet.Models;
@@ -14,9 +13,9 @@ using UIKit;
 
 namespace JudoDotNetXamariniOSSDK.Services
 {
-    internal class ApplePayService :IApplePayService
+    internal class ApplePayService : IApplePayService
     {
-        private	JudoPayApi _judoAPI;
+        private JudoPayApi _judoAPI;
         private ClientService _clientService;
 
         public ApplePayService (JudoPayApi judoAPI)
@@ -25,7 +24,7 @@ namespace JudoDotNetXamariniOSSDK.Services
             _clientService = new ClientService ();
         }
 
-        public  void MakeApplePayment (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UIViewController rootView, ApplePaymentType type)
+        public void MakeApplePayment (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UIViewController rootView, ApplePaymentType type)
         {
             try {
                 PKPaymentRequest request = new PKPaymentRequest ();
@@ -48,7 +47,7 @@ namespace JudoDotNetXamariniOSSDK.Services
 
 
 
-                PKPaymentAuthorizationViewController pkController = new PKPaymentAuthorizationViewController (request){ Delegate = pkDelegate };
+                PKPaymentAuthorizationViewController pkController = new PKPaymentAuthorizationViewController (request) { Delegate = pkDelegate };
                 rootView.PresentViewController (pkController, true, null);
 
             } catch (Exception e) {
@@ -66,6 +65,7 @@ namespace JudoDotNetXamariniOSSDK.Services
             try {
                 CardPaymentModel paymentmodel = new CardPaymentModel {
                     JudoId = JudoConfiguration.Instance.JudoId,
+                    ConsumerLocation = _clientService.GetDeviceLocation (),
                     ClientDetails = _clientService.GetClientDetails (),
                     UserAgent = _clientService.GetSDKVersion ()
                 };
@@ -78,6 +78,7 @@ namespace JudoDotNetXamariniOSSDK.Services
                     YourConsumerReference = customerRef,
                     Amount = amount.ToDecimal (),
                     ClientDetails = _clientService.GetClientDetails (),
+                    ConsumerLocation = _clientService.GetDeviceLocation (),
                     UserAgent = _clientService.GetSDKVersion (),
                     PkPayment = new PKPaymentInnerModel () {
                         Token = new PKPaymentTokenModel () {
@@ -106,7 +107,7 @@ namespace JudoDotNetXamariniOSSDK.Services
                 return null;
             }
         }
-			
+
     }
 }
 
