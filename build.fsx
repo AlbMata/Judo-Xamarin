@@ -39,10 +39,11 @@ Target "ios-Release" (fun () ->
             Target = "Build"
         })
   TeamCityHelper.PublishArtifact (project + "/src/JudoDotNetXamariniOSSDK/bin/Release/*.dll")
+)
     // let appPath = Directory.EnumerateFiles(Path.Combine("src", "JudoXamarin.JudoDotNetXamariniOSSDK", "bin", "iPhone", "Ad-Hoc"), "*.ipa").First()
 
     // TeamCityHelper.PublishArtifact appPath
-)
+
 
 // Target "ios-appstore" (fun () ->
 //     RestorePackages "TipCalc.iOS.sln"
