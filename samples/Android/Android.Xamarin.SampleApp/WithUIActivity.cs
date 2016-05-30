@@ -9,6 +9,7 @@ using JudoDotNetXamarinAndroidSDK;
 using JudoPayDotNet.Errors;
 using System.Text;
 using Android.Content.PM;
+using Plugin.CurrentActivity;
 
 namespace Android.Xamarin.SampleApp
 {
@@ -147,7 +148,7 @@ namespace Android.Xamarin.SampleApp
 
         private void payPreAuth_Click (object sender, EventArgs e)
         {
-            Judo.Instance.PreAuth (GetCardViewModel (), SuccessPayment, FailurePayment, this);
+            Judo.Instance.PreAuth (GetCardViewModel (), SuccessPayment, FailurePayment, CrossCurrentActivity.Current.Activity);
         }
 
         private void payToken_Click (object sender, EventArgs e)
@@ -229,6 +230,10 @@ namespace Android.Xamarin.SampleApp
             Judo.UIMode = true;
             //Judo.AVSEnabled = true;
 
+            configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
+            configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
+            configInstance.JudoId = "100915867";
+            // configInstance.JudoId = "958389";//applepay 
 
             /*
             configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal

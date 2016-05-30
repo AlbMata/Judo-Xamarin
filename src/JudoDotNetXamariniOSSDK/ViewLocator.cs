@@ -8,38 +8,43 @@ namespace JudoDotNetXamariniOSSDK
     {
         readonly IPaymentService _paymentService;
 
-        public ViewLocator(IPaymentService paymentService)
+        public ViewLocator (IPaymentService paymentService)
         {
             _paymentService = paymentService;
         }
 
-        public CreditCardView GetPaymentView()
+        public CreditCardView GetPaymentView ()
         {
-            CreditCardView ctrl = new CreditCardView(_paymentService);
-            return ctrl;
-        }
-			
-        public PreAuthorisationView GetPreAuthView()
-        {
-            PreAuthorisationView ctrl = new PreAuthorisationView(_paymentService);
+            _paymentService.CycleSession ();
+            CreditCardView ctrl = new CreditCardView (_paymentService);
             return ctrl;
         }
 
-		public RegisterCardView GetRegisterCardView()
-		{
-			RegisterCardView ctrl = new RegisterCardView(_paymentService);
-			return ctrl;
-		}
-
-        public TokenPaymentView GetTokenPaymentView()
+        public PreAuthorisationView GetPreAuthView ()
         {
-            TokenPaymentView ctrl = new TokenPaymentView(_paymentService);
+            _paymentService.CycleSession ();
+            PreAuthorisationView ctrl = new PreAuthorisationView (_paymentService);
             return ctrl;
         }
 
-        public TokenPreAuthorisationView GetTokenPreAuthView()
+        public RegisterCardView GetRegisterCardView ()
         {
-            TokenPreAuthorisationView ctrl = new TokenPreAuthorisationView(_paymentService);
+            _paymentService.CycleSession ();
+            RegisterCardView ctrl = new RegisterCardView (_paymentService);
+            return ctrl;
+        }
+
+        public TokenPaymentView GetTokenPaymentView ()
+        {
+            _paymentService.CycleSession ();
+            TokenPaymentView ctrl = new TokenPaymentView (_paymentService);
+            return ctrl;
+        }
+
+        public TokenPreAuthorisationView GetTokenPreAuthView ()
+        {
+            _paymentService.CycleSession ();
+            TokenPreAuthorisationView ctrl = new TokenPreAuthorisationView (_paymentService);
             return ctrl;
         }
 
