@@ -9,7 +9,6 @@ using JudoDotNetXamarinAndroidSDK;
 using JudoPayDotNet.Errors;
 using System.Text;
 using Android.Content.PM;
-using Plugin.CurrentActivity;
 
 namespace Android.Xamarin.SampleApp
 {
@@ -18,7 +17,6 @@ namespace Android.Xamarin.SampleApp
     {
 
         private const int FINE_LOCATION_PERMISSION_REQUEST = 0x0009;
-        private string paymentReference = "payment101010102";
         private string consumerRef = "consumer1010102";
         private const string cardNumber = "4976000000003436";
         private const string addressPostCode = "TR14 8PA";
@@ -91,12 +89,16 @@ namespace Android.Xamarin.SampleApp
             consumerToken = receipt.Consumer.ConsumerToken;
             lastFour = receipt.CardDetails.CardLastfour;
             cardType = receipt.CardDetails.CardType;
+
             //set alert for executing the task
             AlertDialog.Builder alert = new AlertDialog.Builder (this);
             alert.SetTitle ("Transaction Successful, Receipt ID - " + receipt.ReceiptId);
             alert.SetPositiveButton ("OK", (senderAlert, args) => {
             });
 
+            if (!Judo.UIMode) {
+                Judo.Instance.CycleSession ();
+            }
             RunOnUiThread (() => {
                 alert.Show ();
             });
@@ -116,10 +118,19 @@ namespace Android.Xamarin.SampleApp
                     foreach (FieldError model in error.ApiError.ModelErrors) {
                         builder.AppendLine (model.Message + (!String.IsNullOrWhiteSpace (model.FieldName) ? "(" + model.FieldName + ")" : ""));
                     }
+
+                    if (error.ApiError == null || error.ApiError.Code != 86) {// represents the duplicate payment error code
+                        if (!Judo.UIMode) {
+                            Judo.Instance.CycleSession ();
+                        }
+                    }
+
                 } else {
                     title = ("Error");
                     builder.AppendLine (error.ApiError.Message);
-
+                    if (!Judo.UIMode) {
+                        Judo.Instance.CycleSession ();
+                    }
                 }
             }
             if (receipt != null) {
@@ -148,7 +159,7 @@ namespace Android.Xamarin.SampleApp
 
         private void payPreAuth_Click (object sender, EventArgs e)
         {
-            Judo.Instance.PreAuth (GetCardViewModel (), SuccessPayment, FailurePayment, CrossCurrentActivity.Current.Activity);
+            Judo.Instance.PreAuth (GetCardViewModel (), SuccessPayment, FailurePayment, this);
         }
 
         private void payToken_Click (object sender, EventArgs e)
@@ -229,11 +240,6 @@ namespace Android.Xamarin.SampleApp
             configInstance.Environment = JudoEnvironment.Live;
             Judo.UIMode = true;
             //Judo.AVSEnabled = true;
-
-            configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
-            configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
-            configInstance.JudoId = "100915867";
-            // configInstance.JudoId = "958389";//applepay 
 
             /*
             configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal

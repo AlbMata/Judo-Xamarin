@@ -48,5 +48,10 @@ namespace JudoDotNetXamariniOSSDK
             return ctrl;
         }
 
+
+        public void CycleSession ()
+        {
+            _paymentService.CycleSession ();
+        }
     }
 }

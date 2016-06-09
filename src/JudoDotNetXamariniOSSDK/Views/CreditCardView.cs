@@ -307,8 +307,6 @@ namespace JudoDotNetXamariniOSSDK.Views
             }
         }
 
-
-
         private void MakePayment ()
         {
             try {
@@ -316,7 +314,6 @@ namespace JudoDotNetXamariniOSSDK.Views
                 LoadingScreen.ShowLoading (this.View);
 
                 cardPayment.Card = GatherCardDetails ();
-
 
 
                 _paymentService.MakePayment (cardPayment, new ClientService ()).ContinueWith (reponse => {

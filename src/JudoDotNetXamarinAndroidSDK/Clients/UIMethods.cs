@@ -254,6 +254,13 @@ namespace JudoDotNetXamarinAndroidSDK
             }
 
         }
+        /// <summary>
+        /// intentionally empty, no point, matches interface
+        /// </summary>
+        /// <returns>The session.</returns>
+        public void CycleSession ()
+        {
+        }
     }
 }
 

@@ -106,11 +106,12 @@ namespace JudoDotNetXamariniOSSDK
         public static bool UIMode {
             get { return _uiMode; }
             set {
-                if (value)
+                if (value) {
                     _judoSdkApi = new UIMethods (new ViewLocator (PaymentService));
-                else
+                } else {
                     _judoSdkApi = new NonUIMethods (PaymentService);
-
+                    _judoSdkApi.CycleSession ();
+                }
                 _uiMode = value;
             }
         }
@@ -148,7 +149,6 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="preAuthorisation">PaymentViewModel to pass Amount and card detail</param>
         /// <param name="success">Callback for success transaction</param>
         /// <param name="failure">Callback for fail transaction</param>
-        /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
         public void PreAuth (PaymentViewModel preAuthorisation, JudoSuccessCallback success, JudoFailureCallback failure)
         {
             RootCheck (failure);
@@ -235,6 +235,11 @@ namespace JudoDotNetXamariniOSSDK
                 vc = vc.PresentedViewController;
             }
             return vc;
+        }
+
+        public void CycleSession ()
+        {
+            _judoSdkApi.CycleSession ();
         }
     }
 }

@@ -95,7 +95,6 @@ namespace JudoDotNetXamariniOSSDK.Clients
 
             var result = reponse.Result;
             if (result != null && !result.HasError && result.Response.Result != "Declined") {
-                _paymentService.CycleSession ();
                 var secureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
                 if (secureReceipt != null) {
                     var judoError = new JudoError { ApiError = result != null ? result.Error : null };
@@ -119,11 +118,6 @@ namespace JudoDotNetXamariniOSSDK.Clients
                 // Failure
                 if (failure != null) {
                     var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-
-                    if (judoError.ApiError == null || judoError.ApiError.Code != 86) {
-                        _paymentService.CycleSession ();
-                    }
-
                     var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
 
                     if (paymentreceipt != null) {
@@ -138,6 +132,9 @@ namespace JudoDotNetXamariniOSSDK.Clients
             }
         }
 
-
+        public void CycleSession ()
+        {
+            _paymentService.CycleSession ();
+        }
     }
 }

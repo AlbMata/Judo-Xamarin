@@ -10,7 +10,7 @@ namespace JudoDotNetXamarin
         /// <summary>
         /// Enable 3D security process
         /// </summary>
-        bool ThreeDSecureEnabled{ get; set; }
+        bool ThreeDSecureEnabled { get; set; }
 
         /// <summary>
         /// Enable/Disable AVS check
@@ -32,7 +32,7 @@ namespace JudoDotNetXamarin
         /// Enable/Disable risk signal to pass fruad monitoring device data
         /// default is true
         /// </summary>
-        bool RiskSignals{ get; set; }
+        bool RiskSignals { get; set; }
 
 
         /// <summary>
@@ -51,6 +51,8 @@ namespace JudoDotNetXamarin
         void TokenPreAuth (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure);
 
         void RegisterCard (PaymentViewModel registerCard, JudoSuccessCallback success, JudoFailureCallback failure);
+
+        void CycleSession ();
 
     }
 }

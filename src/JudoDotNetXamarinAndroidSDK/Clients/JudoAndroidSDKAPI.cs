@@ -15,6 +15,8 @@ namespace JudoDotNetXamarinAndroidSDK
         void TokenPreAuth (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context);
 
         void RegisterCard (PaymentViewModel registerCard, JudoSuccessCallback success, JudoFailureCallback failure, Activity context);
+
+        void CycleSession ();
     }
 }
 

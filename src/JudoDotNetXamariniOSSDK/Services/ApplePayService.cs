@@ -17,11 +17,13 @@ namespace JudoDotNetXamariniOSSDK.Services
     {
         private JudoPayApi _judoAPI;
         private ClientService _clientService;
+        private PKPaymentModel _sessionPKPaymentModel { get; set; }
 
         public ApplePayService (JudoPayApi judoAPI)
         {
             _judoAPI = judoAPI;
             _clientService = new ClientService ();
+            _sessionPKPaymentModel = new PKPaymentModel ();
         }
 
         public void MakeApplePayment (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UIViewController rootView, ApplePaymentType type)
@@ -45,8 +47,6 @@ namespace JudoDotNetXamariniOSSDK.Services
 
                 var pkDelegate = new JudoPKPaymentAuthorizationViewControllerDelegate (this, request, payment.ConsumerRef.ToString (), type, success, failure);
 
-
-
                 PKPaymentAuthorizationViewController pkController = new PKPaymentAuthorizationViewController (request) { Delegate = pkDelegate };
                 rootView.PresentViewController (pkController, true, null);
 
@@ -63,37 +63,31 @@ namespace JudoDotNetXamariniOSSDK.Services
         public async Task<IResult<ITransactionResult>> HandlePKPayment (PKPayment payment, string customerRef, NSDecimalNumber amount, ApplePaymentType type, JudoFailureCallback failure)
         {
             try {
-                CardPaymentModel paymentmodel = new CardPaymentModel {
-                    JudoId = JudoConfiguration.Instance.JudoId,
-                    ConsumerLocation = _clientService.GetDeviceLocation (),
-                    ClientDetails = _clientService.GetClientDetails (),
-                    UserAgent = _clientService.GetSDKVersion ()
-                };
 
+                var json = payment.Token.PaymentData.ToString (NSStringEncoding.UTF8);
+                JObject jo = JObject.Parse (json.ToString ());
 
-                var test = payment.Token.PaymentData.ToString (NSStringEncoding.UTF8);
-                JObject jo = JObject.Parse (test.ToString ());
-                PKPaymentModel pkModel = new PKPaymentModel () {
-                    JudoId = JudoConfiguration.Instance.JudoId,
-                    YourConsumerReference = customerRef,
-                    Amount = amount.ToDecimal (),
-                    ClientDetails = _clientService.GetClientDetails (),
-                    ConsumerLocation = _clientService.GetDeviceLocation (),
-                    UserAgent = _clientService.GetSDKVersion (),
-                    PkPayment = new PKPaymentInnerModel () {
-                        Token = new PKPaymentTokenModel () {
-                            PaymentData = jo,
-                            PaymentInstrumentName = payment.Token.PaymentInstrumentName,
-                            PaymentNetwork = payment.Token.PaymentNetwork
-                        }
+                _sessionPKPaymentModel.JudoId = JudoConfiguration.Instance.JudoId;
+                _sessionPKPaymentModel.YourConsumerReference = customerRef;
+                _sessionPKPaymentModel.Amount = amount.ToDecimal ();
+                _sessionPKPaymentModel.ClientDetails = _clientService.GetClientDetails ();
+                _sessionPKPaymentModel.ConsumerLocation = _clientService.GetDeviceLocation ();
+                _sessionPKPaymentModel.UserAgent = _clientService.GetSDKVersion ();
+                _sessionPKPaymentModel.PkPayment = new PKPaymentInnerModel () {
+                    Token = new PKPaymentTokenModel () {
+                        PaymentData = jo,
+                        PaymentInstrumentName = payment.Token.PaymentInstrumentName,
+                        PaymentNetwork = payment.Token.PaymentNetwork
                     }
                 };
+
+
                 Task<IResult<ITransactionResult>> task = null;
                 if (type == ApplePaymentType.Payment) {
 
-                    task = _judoAPI.Payments.Create (pkModel);
+                    task = _judoAPI.Payments.Create (_sessionPKPaymentModel);
                 } else if (type == ApplePaymentType.PreAuth) {
-                    task = _judoAPI.PreAuths.Create (pkModel);
+                    task = _judoAPI.PreAuths.Create (_sessionPKPaymentModel);
                 }
                 if (task == null) {
                     var judoError = new JudoError () { Exception = new Exception ("Judo server did not return response. Please contact customer support") };
@@ -108,6 +102,10 @@ namespace JudoDotNetXamariniOSSDK.Services
             }
         }
 
+        public void CycleSession ()
+        {
+            _sessionPKPaymentModel = new PKPaymentModel ();
+        }
     }
 }
 

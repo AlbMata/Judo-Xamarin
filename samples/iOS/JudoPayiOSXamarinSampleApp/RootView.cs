@@ -76,6 +76,9 @@ namespace JudoPayiOSXamarinSampleApp
             consumerToken = receipt.Consumer.ConsumerToken;
             lastFour = receipt.CardDetails.CardLastfour;
             cardType = receipt.CardDetails.CardType;
+            if (!Judo.UIMode) {
+                Judo.Instance.CycleSession ();
+            }
             DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 
                 // show receipt
@@ -87,6 +90,8 @@ namespace JudoPayiOSXamarinSampleApp
 
         private void FailurePayment (JudoError error, PaymentReceiptModel receipt)
         {
+
+
             DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                 // move back to home screen
                 // show receipt
@@ -106,6 +111,12 @@ namespace JudoPayiOSXamarinSampleApp
                     } else {
                         title = "Error";
                         builder.AppendLine (error.ApiError.Message);
+                    }
+                }
+
+                if (error.ApiError == null || error.ApiError.Code != 86) {// represents the duplicate payment error code
+                    if (!Judo.UIMode) {
+                        Judo.Instance.CycleSession ();
                     }
                 }
 
