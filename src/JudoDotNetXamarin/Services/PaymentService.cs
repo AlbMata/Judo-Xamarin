@@ -29,12 +29,9 @@ namespace JudoDotNetXamarin
 
         public async Task<IResult<ITransactionResult>> MakePayment (PaymentViewModel paymentViewModel, IClientService clientService)
         {
-
-
             PopulatePaymentModel (paymentViewModel, clientService);
             Task<IResult<ITransactionResult>> task = _judoAPI.Payments.Create (_sessionPaymentModel);
             return await task;
-
         }
 
         private void PopulatePaymentModel (PaymentViewModel paymentViewModel, IClientService clientService)

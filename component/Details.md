@@ -15,7 +15,16 @@ Or take a look at the code yourself [Github](https://github.com/JudoPay/Judo-Xam
 
 # Release 
 
-Version 2.3.4
+Version 2.4.0
 
 - Bug fixes
-- Apple pay now only requires TotalSummaryItem to function, facilitating single item billing
+- Fraud improvements
+- Apple Pay updates
+
+# Notes 
+
+Breaking change, when using non UI calls to the 
+API you must recycle the session
+Judo.Instance.CycleSession();
+before making further calls.
+This is to insure unique payment reference

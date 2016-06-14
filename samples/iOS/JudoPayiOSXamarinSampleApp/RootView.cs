@@ -246,7 +246,6 @@ namespace JudoPayiOSXamarinSampleApp
 
                 }
             };
-            var test = PassKit.PKPaymentNetwork.Amex;
             var applePayment = new ApplePayViewModel {
 
                 CurrencyCode = new NSString ("GBP"),
