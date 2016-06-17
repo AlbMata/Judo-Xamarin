@@ -139,7 +139,7 @@ Apple Pay
 
 //Construct the viewModel
 
-//note summaryItems are optional and don't
+//Note summaryItems are optional and don't
 //need to be used in a single item top up scenario
 
 var summaryItems = new PKPaymentSummaryItem[] {
@@ -192,9 +192,9 @@ Changing the property below to false enables non UIMode
     Judo.UIMode = false;
 ```
 
-If you choose to create your own custom UI and gather the card details yourself you can provide the same calls documented above with the completed viewModel (excluding Apple Pay) and make payments in the same callback completion manner as before. Please note doing so brings you into the scope of PCI DSS and you are subject third party stringent audits
+If you choose to create your own custom UI and gather card details yourself, you can provide the same calls documented above with the completed viewModel (excluding Apple Pay) and make payments in the same callback completion manner as before. **Please note that doing so brings you into the scope of PCI DSS and you will be subject to third party stringent audits.**
 
-**Note**  when using non UI calls to the API you must recycle the session using the below call, before making further calls. This is to insure unique payment reference
+**Note**: When using non-UI calls to the API, you must recycle the session using the below call, before making further calls. This is to ensure unique payment reference is assigned:
 ```
 Judo.Instance.CycleSession(); 
 ```
@@ -242,7 +242,7 @@ Have your say, If you want a feature maybe we can work together on it?
 
 ####Note
 
-**Breaking change**, when using non UI calls to the API you must recycle the session Judo.Instance.CycleSession(); before making further calls. This is to insure unique payment reference
+**Breaking change:** when using non-UI calls to the API, you must recycle the session Judo.Instance.CycleSession(); before making further calls. This is to insure a unique payment reference is assigned.
 
 ####V2.3.4
 
