@@ -22,12 +22,12 @@ namespace Android.Xamarin.SampleApp
         private const string cardNumber = "4976000000003436";
         private const string addressPostCode = "TR14 8PA";
         private const string startDate = "";
-        private  const string expiryDate = "12/20";
+        private const string expiryDate = "12/20";
         private const string cv2 = "452";
 
         private volatile string cardToken;
         private volatile string consumerToken;
-   
+
         private volatile string lastFour;
         private volatile CardType cardType;
 
@@ -58,9 +58,9 @@ namespace Android.Xamarin.SampleApp
             FindViewById<TextView> (Resource.Id.sdk_version_label).Text = "";
 
             Switch switchbutton = FindViewById<Switch> (Resource.Id.switch1);
-            switchbutton.Checked = Judo.UIMode; 
+            switchbutton.Checked = Judo.UIMode;
 
-            switchbutton.CheckedChange += delegate(object sender, CompoundButton.CheckedChangeEventArgs e) {
+            switchbutton.CheckedChange += delegate (object sender, CompoundButton.CheckedChangeEventArgs e) {
                 Judo.UIMode = switchbutton.Checked;
                 // Perform action on clicks
                 if (switchbutton.Checked)
@@ -121,7 +121,7 @@ namespace Android.Xamarin.SampleApp
             alert.SetMessage (builder.ToString ());
             alert.SetPositiveButton ("OK", (senderAlert, args) => {
             });
-                
+
             RunOnUiThread (() => {
                 alert.Show ();
             });
@@ -149,7 +149,7 @@ namespace Android.Xamarin.SampleApp
                     ToastLength.Short).Show ();
                 return;
             }
-                
+
             Judo.Instance.TokenPayment (GetTokenCardViewModel (), SuccessPayment, FailurePayment, this);
 
         }
@@ -166,7 +166,7 @@ namespace Android.Xamarin.SampleApp
 
             Judo.Instance.TokenPreAuth (GetTokenCardViewModel (), SuccessPayment, FailurePayment, this);
 
-         
+
         }
 
         private void registerCard_Click (object sender, EventArgs e)
@@ -179,7 +179,7 @@ namespace Android.Xamarin.SampleApp
         private PaymentViewModel GetCardViewModel ()
         {
             var cardPayment = new PaymentViewModel {
-                Amount = 4.5m, 
+                Amount = 4.5m,
                 ConsumerReference = consumerRef,
                 Currency = "GBP",
                 // Non-UI API needs to pass card detail
@@ -230,9 +230,15 @@ namespace Android.Xamarin.SampleApp
             configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
             */
 
+            configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
+            configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
+            configInstance.JudoId = "100915867";
+            //configInstance.JudoId = "958389";//applepay 
+
+
             if (configInstance.ApiToken == null) {
-                
-                throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
+
+                throw (new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
             }
         }
 
@@ -247,7 +253,7 @@ namespace Android.Xamarin.SampleApp
                 outState.PutInt ("CARDTYPE", (int)cardType);
 
                 // always call the base implementation!
-                base.OnSaveInstanceState (outState);    
+                base.OnSaveInstanceState (outState);
             }
 
         }

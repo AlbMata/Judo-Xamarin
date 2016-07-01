@@ -28,7 +28,7 @@ using nuint = global::System.UInt32;
 namespace JudoDotNetXamariniOSSDK.Controllers
 {
     [Register ("SecureWebView")]
-    internal partial class SecureWebView :UIWebView
+    internal partial class SecureWebView : UIWebView
     {
 
         public SecureWebView (IntPtr p) : base (p)
@@ -37,14 +37,14 @@ namespace JudoDotNetXamariniOSSDK.Controllers
                 this.ScrollView.SetZoomScale (2.0f, true);
             };
             this.ShouldStartLoad = (UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType) => {
-				
-                if (request.Url.ToString ().Contains ("threedsecurecallback") && ReceiptID != null) {
-                    Dictionary<string,string> queryStringDictionary = new Dictionary<string,string> ();
 
-                    var TrackTraceDataArray = request.Body.ToString ().Split (new char[] { '&' });
+                if (request.Url.ToString ().Contains ("threedsecurecallback") && ReceiptID != null) {
+                    Dictionary<string, string> queryStringDictionary = new Dictionary<string, string> ();
+
+                    var TrackTraceDataArray = request.Body.ToString ().Split (new char [] { '&' });
 
                     foreach (string keyValuePair in TrackTraceDataArray) {
-                        var pairComponents = keyValuePair.Split (new char[] { '=' });
+                        var pairComponents = keyValuePair.Split (new char [] { '=' });
                         string key = pairComponents.First ();
                         string value = pairComponents.Last ();
                         queryStringDictionary.Add (key, value);
@@ -59,7 +59,7 @@ namespace JudoDotNetXamariniOSSDK.Controllers
                     mdUnEncoded = mdUnEncoded.Replace ("\r\n", string.Empty);
                     _paymentService.CompleteDSecure (ReceiptID, paResUnEncoded, mdUnEncoded).ContinueWith (reponse => {
                         var result = reponse.Result;
-                        if (result != null && !result.HasError && result.Response.Result != "Declined") {
+                        if (result != null && !result.HasError && result.Response.Result == "Success") {
                             var paymentreceipt = result.Response as PaymentReceiptModel;
 
                             if (paymentreceipt != null) {
@@ -67,7 +67,7 @@ namespace JudoDotNetXamariniOSSDK.Controllers
                                 if (_successCallback != null) {
                                     CloseView ();
                                     _successCallback (paymentreceipt);
-                                }	
+                                }
                             } else {
                                 throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
                             }
@@ -82,7 +82,7 @@ namespace JudoDotNetXamariniOSSDK.Controllers
                                     // send receipt even we got card declined
                                     CloseView ();
                                     _failureCallback (judoError, paymentreceipt);
-                                   
+
                                 } else {
                                     CloseView ();
                                     _failureCallback (judoError);
@@ -118,9 +118,9 @@ namespace JudoDotNetXamariniOSSDK.Controllers
                     navC.PopViewController (true);
                 }
 
-              
+
                 vc.DismissViewController (true, null);
-             
+
             });
 
         }

@@ -8,7 +8,7 @@ using PassKit;
 
 namespace JudoDotNetXamariniOSSDK.Delegates
 {
-    internal partial class JudoPKPaymentAuthorizationViewControllerDelegate :NSObject, IPKPaymentAuthorizationViewControllerDelegate
+    internal partial class JudoPKPaymentAuthorizationViewControllerDelegate : NSObject, IPKPaymentAuthorizationViewControllerDelegate
     {
         IApplePayService _applePayService;
         NSDecimalNumber _runningTotal;
@@ -41,22 +41,22 @@ namespace JudoDotNetXamariniOSSDK.Delegates
 
         public void WillAuthorizePayment (PKPaymentAuthorizationViewController controller)
         {
-			
+
         }
 
         async Task ClearPaymentWithJudo (PKPayment payment, string customerRef, Action<PKPaymentAuthorizationStatus> completion)
         {
 
-          
+
             var result = await _applePayService.HandlePKPayment (payment, customerRef, _runningTotal, _paymentAction, _failureCallback);
-           
-            if (result != null && !result.HasError && result.Response.Result != "Declined") {
-				
+
+            if (result != null && !result.HasError && result.Response.Result == "Success") {
+
                 var paymentreceipt = result.Response as PaymentReceiptModel;
 
                 if (paymentreceipt != null) {
                     if (_successCallBack != null) {
-						
+
                         completion (PKPaymentAuthorizationStatus.Success);
                         _successCallBack (paymentreceipt);
                     }
@@ -77,8 +77,8 @@ namespace JudoDotNetXamariniOSSDK.Delegates
                     }
                 }
             }
-           
-				
+
+
         }
     }
 }

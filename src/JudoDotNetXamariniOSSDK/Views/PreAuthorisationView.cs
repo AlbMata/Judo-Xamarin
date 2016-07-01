@@ -47,11 +47,11 @@ namespace JudoDotNetXamariniOSSDK.Views
 
         CardEntryCell detailCell;
 
-        ReassuringTextCell reassuringCell{ get; set; }
+        ReassuringTextCell reassuringCell { get; set; }
 
         MaestroCell maestroCell { get; set; }
 
-        AVSCell avsCell{ get; set; }
+        AVSCell avsCell { get; set; }
 
         public JudoSuccessCallback successCallback { get; set; }
 
@@ -95,7 +95,7 @@ namespace JudoDotNetXamariniOSSDK.Views
 
             UITapGestureRecognizer tapRecognizer = new UITapGestureRecognizer ();
 
-            tapRecognizer.AddTarget (() => { 
+            tapRecognizer.AddTarget (() => {
                 if (KeyboardVisible) {
                     DismissKeyboardAction ();
                 }
@@ -193,7 +193,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                         ccIsFirstResponder = false;
 
 
-                        TableView.InsertRows (new NSIndexPath[]{ NSIndexPath.FromRowSection (CellsToShow.IndexOf (avsCell), 0) }, UITableViewRowAnimation.Fade);
+                        TableView.InsertRows (new NSIndexPath [] { NSIndexPath.FromRowSection (CellsToShow.IndexOf (avsCell), 0) }, UITableViewRowAnimation.Fade);
                         TableView.EndUpdates ();
                     }
 
@@ -206,7 +206,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                         insertedCells.Add (maestroCell);
                         maestroCell.StartDateTextFieldOutlet.BecomeFirstResponder ();
                         ccIsFirstResponder = false;
-                        TableView.InsertRows (new NSIndexPath[]{ NSIndexPath.FromRowSection (CellsToShow.IndexOf (maestroCell), 0) }, UITableViewRowAnimation.Fade);
+                        TableView.InsertRows (new NSIndexPath [] { NSIndexPath.FromRowSection (CellsToShow.IndexOf (maestroCell), 0) }, UITableViewRowAnimation.Fade);
                         TableView.EndUpdates ();
                     }
 
@@ -281,7 +281,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                 UpdateUI ();
             };
 
-            CellsToShow = new List<CardCell> (){ detailCell, reassuringCell };
+            CellsToShow = new List<CardCell> () { detailCell, reassuringCell };
 
 
 
@@ -301,7 +301,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                 RegisterButton.Disable ();
 
                 _paymentService.PreAuthoriseCard (authorisationModel, new ClientService ()).ContinueWith (HandleResponse);
-                
+
             } catch (Exception ex) {
                 LoadingScreen.HideLoading ();
                 // Failure callback
@@ -309,7 +309,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                     var judoError = new JudoError { Exception = ex };
                     DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                         NavigationController.CloseView ();
-                    
+
                         failureCallback (judoError);
                     });
                 }
@@ -333,7 +333,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                 });
             } else {
                 var result = reponse.Result;
-                if (Judo.Instance.ThreeDSecureEnabled && result.Response != null && result.Response.GetType () == typeof(PaymentRequiresThreeDSecureModel)) {
+                if (Judo.Instance.ThreeDSecureEnabled && result.Response != null && result.Response.GetType () == typeof (PaymentRequiresThreeDSecureModel)) {
 
                     var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
 
@@ -341,7 +341,7 @@ namespace JudoDotNetXamariniOSSDK.Views
 
                 } else {
                     try {
-                        if (result != null && !result.HasError && result.Response.Result != "Declined") {
+                        if (result != null && !result.HasError && result.Response.Result == "Success") {
                             var paymentreceipt = result.Response as PaymentReceiptModel;
 
                             if (paymentreceipt != null) {
@@ -349,24 +349,25 @@ namespace JudoDotNetXamariniOSSDK.Views
                                 if (successCallback != null) {
                                     DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                         NavigationController.CloseView ();
-                                   
+
                                         successCallback (paymentreceipt);
                                     });
                                 }
-                                
+
                             } else {
                                 var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
                                 if (threedDSecureReceipt != null) {
                                     DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                         NavigationController.CloseView ();
                                     });
-                                    failureCallback (new JudoError { ApiError = new ModelError {
+                                    failureCallback (new JudoError {
+                                        ApiError = new ModelError {
                                             Message = "Account requires 3D Secure but application is not configured to accept it",
                                             Code = (int)JudoApiError.General_Error,
                                             ModelErrors = null
                                         }
                                     });
-                                   
+
                                 } else {
                                     throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
                                 }
@@ -382,13 +383,13 @@ namespace JudoDotNetXamariniOSSDK.Views
                                     // send receipt even we got card declined
                                     DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                         NavigationController.CloseView ();
-                                   
+
                                         failureCallback (judoError, paymentreceipt);
                                     });
                                 } else {
                                     DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                         NavigationController.CloseView ();
-                                    
+
                                         failureCallback (judoError);
                                     });
                                 }
@@ -403,7 +404,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                             var judoError = new JudoError { Exception = ex };
                             DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                 NavigationController.CloseView ();
-                            
+
                                 failureCallback (judoError);
                             });
                         }
@@ -419,7 +420,7 @@ namespace JudoDotNetXamariniOSSDK.Views
             if (Judo.Instance.MaestroAccepted) {
                 maestroCell.CleanUp ();
 
-            }	
+            }
             if (Judo.Instance.AVSEnabled) {
                 avsCell.CleanUp ();
             }

@@ -44,6 +44,8 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
         private EditText textTextView;
         private TextView hintTextView;
 
+        private bool invalidVisible = false;
+
         private List<int> skipCharsAtPositions = new List<int> ();
         private string hintText = "";
         private int beforeTextSize;
@@ -155,7 +157,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 
             EventHandler<AfterTextChangedEventArgs> afterTextChanged = null;
 
-            
+
             Action<string> updateTextView = newText => {
                 textTextView.TextChanged -= textChanged;
                 textTextView.BeforeTextChanged -= beforeTextChanged;
@@ -219,7 +221,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
                         ValidateInput (args.Editable.ToString ());
                         if (OnEntryComplete != null) {
                             OnEntryComplete (args.Editable.ToString ());
-                        } 
+                        }
                         return;
                     } catch (Exception exception) {
                         Log.Error (Judo.DEBUG_TAG, exception.Message, exception);
@@ -314,7 +316,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
         public virtual void SetInputFilter (string filter)
         {
             filterString = " " + filter;
-            textTextView.SetFilters (new IInputFilter[] {
+            textTextView.SetFilters (new IInputFilter [] {
                 new InputFilterLengthFilter (hintText.Length),
                 new Filter (this)
             });
@@ -345,7 +347,16 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
         {
             nextMustBeDeleted = true;
             textErrorView.Text = errorMessage;
-            AddView (textErrorView);
+            if (!invalidVisible) {
+                AddView (textErrorView);
+
+                invalidVisible = true;
+            }
+
+
+
+
+
             textErrorView.Visibility = ViewStates.Visible;
 
             AnimationSet animationSet = new AnimationSet (true);
@@ -366,6 +377,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             animationSet.AnimationEnd += (sender, args) => {
                 textErrorView.Visibility = ViewStates.Gone;
                 RemoveView (textErrorView);
+                invalidVisible = false;
             };
 
             textErrorView.StartAnimation (animationSet);
