@@ -354,9 +354,6 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             }
 
 
-
-
-
             textErrorView.Visibility = ViewStates.Visible;
 
             AnimationSet animationSet = new AnimationSet (true);

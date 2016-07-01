@@ -230,12 +230,6 @@ namespace Android.Xamarin.SampleApp
             configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
             */
 
-            configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
-            configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
-            configInstance.JudoId = "100915867";
-            //configInstance.JudoId = "958389";//applepay 
-
-
             if (configInstance.ApiToken == null) {
 
                 throw (new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
