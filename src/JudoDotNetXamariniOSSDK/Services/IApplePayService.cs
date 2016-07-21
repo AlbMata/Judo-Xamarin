@@ -10,9 +10,11 @@ namespace JudoDotNetXamariniOSSDK.Services
 {
     internal interface IApplePayService
     {
-        void MakeApplePayment (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController controller, ApplePaymentType type);
+        void MakeApplePayment (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UIViewController controller, ApplePaymentType type);
 
         Task<IResult<ITransactionResult>> HandlePKPayment (PKPayment payment, string customerRef, NSDecimalNumber amount, ApplePaymentType type, JudoFailureCallback failure);
+
+        void CycleSession ();
     }
 }
 

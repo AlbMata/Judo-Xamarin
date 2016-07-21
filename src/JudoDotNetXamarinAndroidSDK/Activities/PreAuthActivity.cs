@@ -12,8 +12,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
     public class PreAuthActivity : PaymentActivity
     {
         private ClientService clientService;
-        IPaymentService _paymentService;
-        ServiceFactory factory;
+
 
         protected override void OnCreate (Bundle bundle)
         {
@@ -22,8 +21,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             SetTitle (Resource.String.title_pre_auth);
             FindViewById<Button> (Resource.Id.payButton).Text = Resources.GetString (Resource.String.preauth);
             clientService = new ClientService ();
-            factory = new ServiceFactory ();
-            _paymentService = factory.GetPaymentService (); 
 
         }
 

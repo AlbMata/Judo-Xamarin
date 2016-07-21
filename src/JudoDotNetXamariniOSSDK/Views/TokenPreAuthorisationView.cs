@@ -70,7 +70,7 @@ namespace JudoDotNetXamariniOSSDK.Views
 
             if (String.IsNullOrEmpty (tokenPayment.Token)) {
 
-                DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
+                DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 
                     UIAlertView _error = new UIAlertView ("Missing Token", "No Card Token found. Please provide application with token via Pre-Authentication or Payment", null, "ok", null);
                     _error.Show ();
@@ -91,7 +91,7 @@ namespace JudoDotNetXamariniOSSDK.Views
 
                 UITapGestureRecognizer tapRecognizer = new UITapGestureRecognizer ();
 
-                tapRecognizer.AddTarget (() => { 
+                tapRecognizer.AddTarget (() => {
                     if (KeyboardVisible) {
                         DismissKeyboardAction ();
                     }
@@ -138,8 +138,8 @@ namespace JudoDotNetXamariniOSSDK.Views
             tokenCell.UpdateUI = () => {
                 UpdateUI ();
             };
-				
-            CellsToShow = new List<CardCell> (){ tokenCell };
+
+            CellsToShow = new List<CardCell> () { tokenCell };
 
             CardCellSource tableSource = new CardCellSource (CellsToShow);
             TableView.Source = tableSource;
@@ -156,7 +156,7 @@ namespace JudoDotNetXamariniOSSDK.Views
         }
 
         private void UpdateUI ()
-        {	
+        {
             PaymentButton.Enabled = tokenCell.Complete;
             PaymentButton.Alpha = (tokenCell.Complete == true ? 1f : 0.25f);
             if (tokenCell.Complete) {
@@ -167,12 +167,12 @@ namespace JudoDotNetXamariniOSSDK.Views
         public void MakeTokenPayment ()
         {
             try {
-
+                PaymentButton.Disable ();
                 LoadingScreen.ShowLoading (this.View);
                 var instance = JudoConfiguration.Instance;
                 tokenPayment.CV2 = tokenCell.CCV;
-			
-                PaymentButton.Disable ();
+
+
 
 
                 _paymentService.MakeTokenPreAuthorisation (tokenPayment, new ClientService ()).ContinueWith (reponse => {
@@ -181,7 +181,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                         LoadingScreen.HideLoading ();
                         DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                             NavigationController.CloseView ();
-                        
+
                             var error = reponse.Result.Error;
                             var judoError = new JudoError () {
                                 ApiError = reponse.Result.Error
@@ -197,7 +197,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                             if (successCallback != null) {
                                 DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                     NavigationController.CloseView ();
-                                
+
                                     successCallback (paymentreceipt);
                                 });
                             }
@@ -211,13 +211,13 @@ namespace JudoDotNetXamariniOSSDK.Views
                                     // send receipt even we got card declined
                                     DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                         NavigationController.CloseView ();
-                                    
+
                                         failureCallback (judoError, paymentreceipt);
                                     });
                                 } else {
                                     DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                         NavigationController.CloseView ();
-                                    
+
                                         failureCallback (judoError);
                                     });
                                 }
@@ -235,7 +235,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                     var judoError = new JudoError { Exception = ex };
                     DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                         NavigationController.CloseView ();
-                   
+
                         failureCallback (judoError);
                     });
                 }

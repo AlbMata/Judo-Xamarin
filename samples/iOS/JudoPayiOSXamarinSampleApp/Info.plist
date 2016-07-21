@@ -56,5 +56,11 @@
 	</dict>
 	<key>CFBundleDisplayName</key>
 	<string>sampleApp</string>
+	<key>CFBundleName</key>
+	<string>sampleApp</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+<string>This application requires location services to work</string>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>This application requires location services to work</string>
 </dict>
 </plist>

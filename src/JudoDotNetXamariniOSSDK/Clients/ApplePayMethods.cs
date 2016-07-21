@@ -24,7 +24,8 @@ namespace JudoDotNetXamariniOSSDK.Clients
         public void ApplePayment (ApplePayViewModel viewModel, JudoSuccessCallback success, JudoFailureCallback failure, ApplePaymentType type)
         {
             if (!_clientService.ApplePayAvailable) {
-                failure (new JudoError { ApiError = new ModelError {
+                failure (new JudoError {
+                    ApiError = new ModelError {
                         Message = "Apple Pay is not enabled on device, application entitlement or setup by user.",
                         Code = (int)JudoApiError.General_Error,
                         ModelErrors = null
@@ -38,9 +39,10 @@ namespace JudoDotNetXamariniOSSDK.Clients
                     var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
                     failure (error);
                 } else {
-                    _paymentService.MakeApplePayment (viewModel, success, failure, vc as UINavigationController, type);
+                    _paymentService.CycleSession ();
+                    _paymentService.MakeApplePayment (viewModel, success, failure, vc, type);
                 }
-			
+
             } catch (Exception ex) {
                 HandleFailure (failure, ex);
             }
@@ -63,6 +65,10 @@ namespace JudoDotNetXamariniOSSDK.Clients
             var vc = window.RootViewController;
             while (vc.PresentedViewController != null) {
                 vc = vc.PresentedViewController;
+            }
+            if (vc is UISplitViewController) {
+                var splitView = vc as UISplitViewController;
+                return splitView.ViewControllers [0];
             }
             return vc;
         }

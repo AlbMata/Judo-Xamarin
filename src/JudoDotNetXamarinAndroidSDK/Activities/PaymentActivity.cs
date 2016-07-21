@@ -27,7 +27,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
         protected AVSEntryView avsEntryView;
         protected HelpButton cv2ExpiryHelpInfoButton;
         protected StartDateIssueNumberEntryView startDateEntryView;
-        IPaymentService _paymentService;
+        internal IPaymentService _paymentService;
         ServiceFactory factory;
 
         Button payButton;
@@ -44,7 +44,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             SetUpDelegates ();
 
             factory = new ServiceFactory ();
-            _paymentService = factory.GetPaymentService (); 
+            _paymentService = factory.GetPaymentService ();
 
             if (bundle != null) {
                 RestoreState (bundle);
@@ -94,12 +94,12 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
         void UnbundleIntent ()
         {
-            
+
             judoConsumer = JsonConvert.DeserializeObject<Consumer> (Intent.GetStringExtra (Judo.JUDO_CONSUMER));
             judoAmount = decimal.Parse (Intent.GetStringExtra (Judo.JUDO_AMOUNT));
             judoId = Intent.GetStringExtra (Judo.JUDO_ID);
             judoCurrency = Intent.GetStringExtra (Judo.JUDO_CURRENCY);
-           
+
             if (judoConsumer == null) {
                 throw new ArgumentException ("JUDO_CONSUMER must be supplied");
             }
@@ -181,7 +181,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                 outState.PutInt ("COUNTRY", (Int32)country);
                 outState.PutString ("POSTCODE", PostCode);
             }
-                
+
             if (Judo.MaestroAccepted) {
                 string startDate = null;
                 string issueNumber = null;
@@ -192,7 +192,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             }
 
             // always call the base implementation!
-            base.OnSaveInstanceState (outState);    
+            base.OnSaveInstanceState (outState);
         }
 
         void RestoreState (Bundle bundle)
@@ -205,7 +205,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             cardEntryView.RestoreState (cardNumber, expiry, cv2, (Stage)stage);
 
             if (Judo.AVSEnabled) {
-              
+
                 //var country = avsEntryView.GetCountry ();
                 //var PostCode = avsEntryView.GetPostCode ();
                 var country = bundle.GetInt ("COUNTRY", 0);
@@ -217,7 +217,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                 string startDate = bundle.GetString ("STARTDATE", "");
                 string issueNumber = bundle.GetString ("ISSUENUMBER", "");
                 startDateEntryView.RestoreState (startDate, issueNumber);
-               
+
 
             }
 

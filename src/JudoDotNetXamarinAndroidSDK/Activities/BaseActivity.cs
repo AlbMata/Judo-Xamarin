@@ -16,14 +16,14 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 {
     public static class BuildConfig
     {
-        #if DEBUG
+#if DEBUG
         public const bool DEBUG = true;
         
 
 
-        #else
+#else
         public const bool DEBUG = false;
-        #endif
+#endif
     }
 
     public abstract class BaseActivity : Activity
@@ -150,12 +150,12 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
         protected void HandleServerResponse (Task<IResult<ITransactionResult>> t)
         {
-            if (t.Exception != null) {      
+            if (t.Exception != null) {
                 var judoError = t.Exception.FlattenToJudoError ();
                 SetResult (Judo.JUDO_ERROR, Judo.CreateErrorIntent (judoError.Message, judoError.Exception, judoError.ApiError));
                 Finish ();
             } else {
-                
+
                 var result = t.Result;
                 if (result != null && !result.HasError && result.Response.Result != "Declined") {
                     var receipt = result.Response;
@@ -196,12 +196,12 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
                     if (receipt != null) {
                         intent.PutExtra (Judo.JUDO_RECEIPT, JsonConvert.SerializeObject (receipt));
-                    } 
+                    }
                     var error = result.Error;
                     if (error != null) {
                         intent.PutExtra (Judo.JUDO_ERROR_EXCEPTION, JsonConvert.SerializeObject (new JudoError (new Exception (error.Message), error)));
                     }
-            
+
                     SetResult (Judo.JUDO_ERROR, intent);
                     Finish ();
 
