@@ -45,7 +45,7 @@ namespace JudoDotNetXamarinAndroidSDK
         private static string AMEX_EXPIRY_AND_VALIDATION_FORMAT_HINT = "MM/YY CIDV";
         private static string REGULAR_EXPIRY_AND_VALIDATION_ERROR_MESSAGE = "Invalid CV2";
         private static string AMEX_EXPIRY_AND_VALIDATION_ERROR_MESSAGE = "Invalid CIDV";
-            
+
         private static readonly Lazy<Judo> _singleton = new Lazy<Judo> (() => new Judo ());
 
         public static Judo Instance {
@@ -55,7 +55,7 @@ namespace JudoDotNetXamarinAndroidSDK
         /// <summary>
         /// Enable 3D security process
         /// </summary>
-        public static bool ThreeDSecureEnabled{ get; set; }
+        public static bool ThreeDSecureEnabled { get; set; }
 
         /// <summary>
         /// Enable/Disable AVS check
@@ -76,7 +76,7 @@ namespace JudoDotNetXamarinAndroidSDK
         /// Enable/Disable risk signal to pass fruad monitoring device data
         /// default is true
         /// </summary>
-        public static bool RiskSignals{ get; set; }
+        public static bool RiskSignals { get; set; }
 
         /// <summary>
         /// SSLPinningEnabled
@@ -90,9 +90,14 @@ namespace JudoDotNetXamarinAndroidSDK
 
         public Judo ()
         {
+            UIMode = true;
+            RiskSignals = true;
+            AmExAccepted = true;
+            MaestroAccepted = true;
 
             _rootCheck = new RootCheck ();
             isRooted = _rootCheck.IsRooted ();
+
         }
 
         private static JudoAndroidSDKAPI _judoSdkApi;
@@ -111,9 +116,6 @@ namespace JudoDotNetXamarinAndroidSDK
 
                 } else {
                     _judoSdkApi = new NonUIMethods ();
-
-
-                  
                 }
                 _uiMode = value;
             }
@@ -122,7 +124,7 @@ namespace JudoDotNetXamarinAndroidSDK
         public void Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
             EvaluateRootCheck (failure);
-            var innerModel = payment.Clone ();         
+            var innerModel = payment.Clone ();
             _judoSdkApi.Payment (innerModel, success, failure, context);
 
         }
@@ -132,13 +134,13 @@ namespace JudoDotNetXamarinAndroidSDK
             EvaluateRootCheck (failure);
             var innerModel = preAuthorisation.Clone ();
             _judoSdkApi.PreAuth (innerModel, success, failure, context);
-          
+
         }
 
         public void TokenPayment (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
             EvaluateRootCheck (failure);
-            var innerModel = payment.Clone ();         
+            var innerModel = payment.Clone ();
             _judoSdkApi.TokenPayment (innerModel, success, failure, context);
         }
 
@@ -147,7 +149,7 @@ namespace JudoDotNetXamarinAndroidSDK
         public void TokenPreAuth (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
             EvaluateRootCheck (failure);
-            var innerModel = payment.Clone ();         
+            var innerModel = payment.Clone ();
             _judoSdkApi.TokenPreAuth (innerModel, success, failure, context);
         }
 
@@ -157,8 +159,8 @@ namespace JudoDotNetXamarinAndroidSDK
                 registerCard.Amount = 1.01m;
             }
             EvaluateRootCheck (failure);
-            var innerModel = registerCard.Clone ();         
-            _judoSdkApi.RegisterCard (innerModel, success, failure, context); 
+            var innerModel = registerCard.Clone ();
+            _judoSdkApi.RegisterCard (innerModel, success, failure, context);
         }
 
         internal static string DEBUG_TAG = "com.judopay.android";
@@ -247,7 +249,12 @@ namespace JudoDotNetXamarinAndroidSDK
                 });
             }
         }
-            
+
+        public void CycleSession ()
+        {
+            _judoSdkApi.CycleSession ();
+        }
+
     }
 
 

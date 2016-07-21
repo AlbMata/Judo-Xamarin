@@ -13,7 +13,7 @@ namespace JudoDotNetXamarinAndroidSDK
 {
     internal class NonUIMethods : Activity, JudoAndroidSDKAPI
     {
-     
+
         IPaymentService _paymentService;
         ServiceFactory factory;
 
@@ -24,14 +24,14 @@ namespace JudoDotNetXamarinAndroidSDK
                 ServiceContainer.Resolve<IHttpClientHelper> ();
             } catch {
                 ServiceContainer.Register<IHttpClientHelper> (new HttpClientHelper ());
-            }      
-            _paymentService = factory.GetPaymentService (); 
+            }
+            _paymentService = factory.GetPaymentService ();
 
         }
 
         public void Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
-            
+
             try {
                 _paymentService.MakePayment (payment, new ClientService ()).ContinueWith (reponse => HandleResponse (success, failure, reponse));
             } catch (Exception ex) {
@@ -97,7 +97,8 @@ namespace JudoDotNetXamarinAndroidSDK
                 var secureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
                 if (secureReceipt != null) {
                     var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-                    failure (new JudoError { ApiError = new ModelError {
+                    failure (new JudoError {
+                        ApiError = new ModelError {
                             Message = "Account requires 3D Secure but non UI Mode does not support this",
                             Code = (int)JudoApiError.General_Error,
                             ModelErrors = null
@@ -130,8 +131,9 @@ namespace JudoDotNetXamarinAndroidSDK
             }
         }
 
-
-
-
+        public void CycleSession ()
+        {
+            _paymentService.CycleSession ();
+        }
     }
 }

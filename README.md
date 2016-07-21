@@ -138,6 +138,10 @@ Apple Pay
 ```
 
 //Construct the viewModel
+
+//Note summaryItems are optional and don't
+//need to be used in a single item top up scenario
+
 var summaryItems = new PKPaymentSummaryItem[] {
 				new PKPaymentSummaryItem () {
 					Amount = new NSDecimalNumber ("0.90"),
@@ -181,7 +185,23 @@ Apple Pay
 Judo.Instance.MakeApplePreAuth (applePayViewModel payment, SuccessCallback success, FailureCallback failure)
 ```
 
+### Non UIMode
+
+Changing the property below to false enables non UIMode
+```
+    Judo.UIMode = false;
+```
+
+If you choose to create your own custom UI and gather card details yourself, you can provide the same calls documented above with the completed viewModel (excluding Apple Pay) and make payments in the same callback completion manner as before. **Please note that doing so brings you into the scope of PCI DSS and you will be subject to third party stringent audits.**
+
+**Note**: When using non-UI calls to the API, you must recycle the session using the below call, before making further calls. This is to ensure unique payment reference is assigned:
+```
+Judo.Instance.CycleSession(); 
+```
+
 ## Media
+
+[Xamarin Evolve](https://www.youtube.com/watch?v=BJWBm3LQMpk) We gave a talk on the tech behind the death of the card terminal at Evolve. Check it out!
 
 [AppCommerce with Judo and Xamarin | Webinar](https://www.youtube.com/watch?v=2Iwff6ETBMs)  We recently hosted a joint Webinar with Xamarin showing you just how easy it is to add payments to your application with Judo.
 
@@ -213,6 +233,30 @@ Have your say, If you want a feature maybe we can work together on it?
 5. Submit a pull request :D
 
 ## Release Notes
+
+####V2.4
+
+- Bug fixes
+- Fraud improvements
+- Apple Pay updates
+
+####Note
+
+**Breaking change:** when using non-UI calls to the API, you must recycle the session Judo.Instance.CycleSession(); before making further calls. This is to insure a unique payment reference is assigned.
+
+####V2.3.4
+
+- Bug fixes
+- Apple pay now only requires TotalSummaryItem to function, facilitating single item billing
+
+####V2.3.3
+
+- Bug fixes
+
+####V2.3.2
+
+- TLS 1.2 support (To meet industry-wide security updates)
+- Improved Transaction speed
 
 ####V2.3.1
 

@@ -6,28 +6,27 @@ using System;
 using Android.Widget;
 using JudoPayDotNet.Models;
 using JudoDotNetXamarinAndroidSDK;
-using Android.Content;
 using JudoPayDotNet.Errors;
-using Android.Views.InputMethods;
-using Android.Views;
 using System.Text;
+using Android.Content.PM;
 
 namespace Android.Xamarin.SampleApp
 {
     [Activity (Label = "@string/app_name_ui", MainLauncher = true, Icon = "@drawable/ic_app_icon")]
     public class WithUIActivity : Activity
     {
-        private string paymentReference = "payment101010102";
+
+        private const int FINE_LOCATION_PERMISSION_REQUEST = 0x0009;
         private string consumerRef = "consumer1010102";
         private const string cardNumber = "4976000000003436";
         private const string addressPostCode = "TR14 8PA";
         private const string startDate = "";
-        private  const string expiryDate = "12/20";
+        private const string expiryDate = "12/20";
         private const string cv2 = "452";
 
         private volatile string cardToken;
         private volatile string consumerToken;
-   
+
         private volatile string lastFour;
         private volatile CardType cardType;
 
@@ -58,9 +57,9 @@ namespace Android.Xamarin.SampleApp
             FindViewById<TextView> (Resource.Id.sdk_version_label).Text = "";
 
             Switch switchbutton = FindViewById<Switch> (Resource.Id.switch1);
-            switchbutton.Checked = Judo.UIMode; 
+            switchbutton.Checked = Judo.UIMode;
 
-            switchbutton.CheckedChange += delegate(object sender, CompoundButton.CheckedChangeEventArgs e) {
+            switchbutton.CheckedChange += delegate (object sender, CompoundButton.CheckedChangeEventArgs e) {
                 Judo.UIMode = switchbutton.Checked;
                 // Perform action on clicks
                 if (switchbutton.Checked)
@@ -73,6 +72,15 @@ namespace Android.Xamarin.SampleApp
                 RestoreState (bundle);
             }
 
+            CheckPermissions ();
+
+        }
+
+        void CheckPermissions ()
+        {
+            if (CheckSelfPermission (Manifest.Permission.AccessFineLocation) != Permission.Granted) {
+                RequestPermissions (new String [] { Manifest.Permission.AccessFineLocation }, FINE_LOCATION_PERMISSION_REQUEST);
+            }
         }
 
         private void SuccessPayment (PaymentReceiptModel receipt)
@@ -81,12 +89,16 @@ namespace Android.Xamarin.SampleApp
             consumerToken = receipt.Consumer.ConsumerToken;
             lastFour = receipt.CardDetails.CardLastfour;
             cardType = receipt.CardDetails.CardType;
+
             //set alert for executing the task
             AlertDialog.Builder alert = new AlertDialog.Builder (this);
             alert.SetTitle ("Transaction Successful, Receipt ID - " + receipt.ReceiptId);
             alert.SetPositiveButton ("OK", (senderAlert, args) => {
             });
 
+            if (!Judo.UIMode) {
+                Judo.Instance.CycleSession ();
+            }
             RunOnUiThread (() => {
                 alert.Show ();
             });
@@ -106,10 +118,19 @@ namespace Android.Xamarin.SampleApp
                     foreach (FieldError model in error.ApiError.ModelErrors) {
                         builder.AppendLine (model.Message + (!String.IsNullOrWhiteSpace (model.FieldName) ? "(" + model.FieldName + ")" : ""));
                     }
+
+                    if (error.ApiError == null || error.ApiError.Code != 86) {// represents the duplicate payment error code
+                        if (!Judo.UIMode) {
+                            Judo.Instance.CycleSession ();
+                        }
+                    }
+
                 } else {
                     title = ("Error");
                     builder.AppendLine (error.ApiError.Message);
-
+                    if (!Judo.UIMode) {
+                        Judo.Instance.CycleSession ();
+                    }
                 }
             }
             if (receipt != null) {
@@ -121,7 +142,7 @@ namespace Android.Xamarin.SampleApp
             alert.SetMessage (builder.ToString ());
             alert.SetPositiveButton ("OK", (senderAlert, args) => {
             });
-                
+
             RunOnUiThread (() => {
                 alert.Show ();
             });
@@ -149,7 +170,7 @@ namespace Android.Xamarin.SampleApp
                     ToastLength.Short).Show ();
                 return;
             }
-                
+
             Judo.Instance.TokenPayment (GetTokenCardViewModel (), SuccessPayment, FailurePayment, this);
 
         }
@@ -166,7 +187,7 @@ namespace Android.Xamarin.SampleApp
 
             Judo.Instance.TokenPreAuth (GetTokenCardViewModel (), SuccessPayment, FailurePayment, this);
 
-         
+
         }
 
         private void registerCard_Click (object sender, EventArgs e)
@@ -179,7 +200,7 @@ namespace Android.Xamarin.SampleApp
         private PaymentViewModel GetCardViewModel ()
         {
             var cardPayment = new PaymentViewModel {
-                Amount = 4.5m, 
+                Amount = 4.5m,
                 ConsumerReference = consumerRef,
                 Currency = "GBP",
                 // Non-UI API needs to pass card detail
@@ -218,11 +239,7 @@ namespace Android.Xamarin.SampleApp
             //setting for Sandnox
             configInstance.Environment = JudoEnvironment.Live;
             Judo.UIMode = true;
-            Judo.AmExAccepted = true;
-            Judo.AVSEnabled = true;
-            Judo.MaestroAccepted = true;
-            Judo.RiskSignals = true;
-
+            //Judo.AVSEnabled = true;
 
             /*
             configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal
@@ -231,8 +248,8 @@ namespace Android.Xamarin.SampleApp
             */
 
             if (configInstance.ApiToken == null) {
-                
-                throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
+
+                throw (new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
             }
         }
 
@@ -247,7 +264,7 @@ namespace Android.Xamarin.SampleApp
                 outState.PutInt ("CARDTYPE", (int)cardType);
 
                 // always call the base implementation!
-                base.OnSaveInstanceState (outState);    
+                base.OnSaveInstanceState (outState);
             }
 
         }

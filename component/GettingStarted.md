@@ -205,7 +205,7 @@ ApplePay
 ```
 Judo.Instance.MakeApplePreAuth (applePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
 ```
-
+**Please note:** Apple Pay is only supported when targeting the Live Enviroment
 
 # Customizing the judoPay UI
 
@@ -255,7 +255,9 @@ You can also customize the messages you present to your user by updating followi
 # Build your own UI
 
 Alternatively, if you want full control over your UI, you can create your own UI for your user to enter their card details. To process payments from your own UI, gather the data your UI provides into a CardViewModel,
-set  Judo.UIMode = false and make calls as your would before.
+set  Judo.UIMode = false and make calls as your would before. 
+
+NOTE Please call Judo.Instance.CycleSession() between calls to the api. This is to insure an entirely unique call to the server
 
 ### Judo Non UI Mode
 
