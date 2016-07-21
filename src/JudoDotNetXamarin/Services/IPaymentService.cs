@@ -21,6 +21,7 @@ namespace JudoDotNetXamarin
         Task<IResult<ITransactionResult>> RegisterCard (PaymentViewModel payment, IClientService clientService);
 
         Task<IResult<ITransactionResult>> CompleteDSecure (long receiptID, string PaRes, string MD);
+        void CycleSession ();
     }
 }
 

@@ -18,11 +18,12 @@ libraries:
     - ../src/JudoDotNetXamarin/bin/Release/JudoDotNetXamarin.dll
     - ../src/JudoDotNetXamarinAndroidSDK/bin/Release/JudoDotNetXamarinAndroidSDK.dll
     - ../lib/JudoPayDotNet.dll
+    - ../lib/JudoShieldAndroid.dll
   ios-unified:
     - ../src/JudoDotNetXamarin/bin/Release/JudoDotNetXamarin.dll
     - ../src/JudoDotNetXamariniOSSDK/bin/Release/JudoDotNetXamariniOSSDK.dll
     - ../lib/JudoPayDotNet.dll
-    - ../lib/JudoShieldXamarin.dll
+    - ../lib/JudoShieldiOS.dll
 samples:
   - name: "iOS Unified Sample"
     path: ../samples/iOS/JudoPayiOSXamarinSampleApp.sln
@@ -38,4 +39,4 @@ packages:
     - Serilog, version=1.5.14
     - modernhttpclient, version=2.4.2
 publisher-url: "https://www.judopay.com"
-version: "2.3.3"
+version: "2.4.0"

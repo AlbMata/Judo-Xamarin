@@ -10,18 +10,13 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
     [Activity (Label = "PreAuthTokenActivity")]
     public class PreAuthTokenActivity : PaymentTokenActivity
     {
-        private ClientService clientService;
-        IPaymentService _paymentService;
-        ServiceFactory factory;
 
         protected override void OnCreate (Bundle bundle)
         {
             base.OnCreate (bundle);
             SetTitle (Resource.String.title_pre_auth_token);
             FindViewById<Button> (Resource.Id.payButton).Text = Resources.GetString (Resource.String.token_preauth);
-            clientService = new ClientService ();
-            factory = new ServiceFactory ();
-            _paymentService = factory.GetPaymentService (); 
+
         }
 
         public override void MakeTokenPayment ()

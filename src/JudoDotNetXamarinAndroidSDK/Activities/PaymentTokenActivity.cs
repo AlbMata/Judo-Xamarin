@@ -18,15 +18,14 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
     public class PaymentTokenActivity : BaseActivity
     {
 
-       
+
         protected decimal judoAmount;
         protected string judoId;
         protected string judoCurrency;
         protected CardToken judoCardToken;
         protected Consumer judoConsumer;
         protected CV2EntryView cv2EntryView;
-        private ClientService clientService;
-        IPaymentService _paymentService;
+        internal IPaymentService _paymentService;
         ServiceFactory factory;
 
         Button payButton;
@@ -46,11 +45,10 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
             cv2EntryView.SetCardDetails (judoCardToken);
 
-            clientService = new ClientService ();
             factory = new ServiceFactory ();
-            _paymentService = factory.GetPaymentService (); 
+            _paymentService = factory.GetPaymentService ();
 
-           
+
             if (bundle != null) {
                 RestoreState (bundle);
             }
@@ -85,9 +83,9 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             judoCurrency = Intent.GetStringExtra (Judo.JUDO_CURRENCY);
             judoCardToken = JsonConvert.DeserializeObject<CardToken> (Intent.GetStringExtra (Judo.JUDO_CARD_DETAILS));
             judoConsumer = JsonConvert.DeserializeObject<Consumer> (Intent.GetStringExtra (Judo.JUDO_CONSUMER));
-     
+
             if (judoCardToken.CardType != null) {
-                cv2EntryView.CurrentCard = judoCardToken.CardType;  
+                cv2EntryView.CurrentCard = judoCardToken.CardType;
             }
 
             if (judoConsumer == null) {
@@ -95,7 +93,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             }
             if (judoAmount == null) {
                 throw new ArgumentException ("JUDO_AMOUNT must be supplied");
-            } 
+            }
             if (judoId == null) {
                 throw new ArgumentException ("JUDO_ID must be supplied");
             }
@@ -137,7 +135,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             };
 
             ShowLoadingSpinner (true);
-          
+
             _paymentService.MakeTokenPayment (payment, new ClientService ()).ContinueWith (HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext ());
         }
 
@@ -156,11 +154,11 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
         {
             var expiryDate = cv2EntryView.GetExpiry ();
             var cv2 = cv2EntryView.GetCV2 ();
-          
+
             outState.PutString ("EXPIRYDATE", expiryDate);
             outState.PutString ("CV2", cv2);
 
-            base.OnSaveInstanceState (outState);    
+            base.OnSaveInstanceState (outState);
         }
 
         void RestoreState (Bundle bundle)

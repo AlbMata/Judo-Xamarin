@@ -21,16 +21,17 @@ namespace JudoPayiOSXamarinSampleApp
 
 
         public override bool FinishedLaunching (UIApplication app, NSDictionary options)
-        {  
-            Window = new UIWindow (UIScreen.MainScreen.Bounds); 
+        {
+            Window = new UIWindow (UIScreen.MainScreen.Bounds);
             RootView root = new RootView ();
             Window.RootViewController = new UINavigationController (root);
             Window.TintColor = UIColor.Black;
             Window.MakeKeyAndVisible ();
             ConfigureJudoSettings ();
-            return true;   
+
+            return true;
         }
-			
+
         // This method is invoked when the application is about to move from active to inactive state.
         // OpenGL applications should use this method to pause.
         public override void OnResignActivation (UIApplication application)
@@ -59,15 +60,15 @@ namespace JudoPayiOSXamarinSampleApp
             //setting for Sandnox
             configInstance.Environment = JudoEnvironment.Live;
 
-          
+
             /*
 			configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal
 			configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal
 			configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
 			*/
-           
+
             if (configInstance.ApiToken == null) {
-                throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
+                throw (new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
             }
 
             /*

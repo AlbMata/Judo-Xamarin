@@ -21,7 +21,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK.Clients
 {
-    internal class NonUIMethods :IJudoSDKApi
+    internal class NonUIMethods : IJudoSDKApi
     {
         private readonly IPaymentService _paymentService;
 
@@ -90,14 +90,16 @@ namespace JudoDotNetXamariniOSSDK.Clients
             }
         }
 
-        private static void HandleResponse (JudoSuccessCallback success, JudoFailureCallback failure, Task<IResult<ITransactionResult>> reponse)
+        private void HandleResponse (JudoSuccessCallback success, JudoFailureCallback failure, Task<IResult<ITransactionResult>> reponse)
         {
+
             var result = reponse.Result;
             if (result != null && !result.HasError && result.Response.Result != "Declined") {
                 var secureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
                 if (secureReceipt != null) {
                     var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-                    failure (new JudoError { ApiError = new ModelError {
+                    failure (new JudoError {
+                        ApiError = new ModelError {
                             Message = "Account requires 3D Secure but non UI Mode does not support this",
                             Code = (int)JudoApiError.General_Error,
                             ModelErrors = null
@@ -130,6 +132,9 @@ namespace JudoDotNetXamariniOSSDK.Clients
             }
         }
 
-	
+        public void CycleSession ()
+        {
+            _paymentService.CycleSession ();
+        }
     }
 }

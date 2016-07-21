@@ -7,16 +7,14 @@ using CoreGraphics;
 using Foundation;
 using JudoDotNetXamarin;
 using JudoDotNetXamariniOSSDK;
-using JudoDotNetXamariniOSSDK;
 using JudoDotNetXamariniOSSDK.ViewModels;
 using JudoDotNetXamariniOSSDK.Views;
 using JudoPayDotNet.Models;
-
 using PassKit;
-
 using UIKit;
 using JudoPayDotNet.Errors;
 using System.Text;
+using CoreLocation;
 
 namespace JudoPayiOSXamarinSampleApp
 {
@@ -34,7 +32,7 @@ namespace JudoPayiOSXamarinSampleApp
         private const string cardNumber = "4976000000003436";
         private const string addressPostCode = "TR14 8PA";
         private const string startDate = "";
-        private  const string expiryDate = "12/20";
+        private const string expiryDate = "12/20";
         private const string cv2 = "452";
 
         private ClientService _clientService;
@@ -62,6 +60,7 @@ namespace JudoPayiOSXamarinSampleApp
 
             label.Text = "Judo Sample App";
             this.NavigationController.NavigationBar.TopItem.TitleView = label;
+            CheckLocationPermissions ();
 
         }
 
@@ -77,6 +76,9 @@ namespace JudoPayiOSXamarinSampleApp
             consumerToken = receipt.Consumer.ConsumerToken;
             lastFour = receipt.CardDetails.CardLastfour;
             cardType = receipt.CardDetails.CardType;
+            if (!Judo.UIMode) {
+                Judo.Instance.CycleSession ();
+            }
             DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 
                 // show receipt
@@ -88,6 +90,8 @@ namespace JudoPayiOSXamarinSampleApp
 
         private void FailurePayment (JudoError error, PaymentReceiptModel receipt)
         {
+
+
             DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                 // move back to home screen
                 // show receipt
@@ -102,11 +106,17 @@ namespace JudoPayiOSXamarinSampleApp
                     if (error.ApiError.ModelErrors != null && error.ApiError.ModelErrors.Count > 0) {
                         foreach (FieldError model in error.ApiError.ModelErrors) {
                             builder.AppendLine (model.Message);
-                     
+
                         }
                     } else {
                         title = "Error";
                         builder.AppendLine (error.ApiError.Message);
+                    }
+                }
+
+                if (error.ApiError == null || error.ApiError.Code != 86) {// represents the duplicate payment error code
+                    if (!Judo.UIMode) {
+                        Judo.Instance.CycleSession ();
                     }
                 }
 
@@ -118,7 +128,7 @@ namespace JudoPayiOSXamarinSampleApp
 
                 ShowMessage (title, builder.ToString ());
             });
-                
+
         }
 
         void SetUpTableView ()
@@ -129,7 +139,7 @@ namespace JudoPayiOSXamarinSampleApp
 
             var tokenPayment = new TokenPaymentViewModel () {
                 Amount = 3.5m,
-                ConsumerReference = consumerRef,  
+                ConsumerReference = consumerRef,
                 CV2 = cv2
             };
 
@@ -195,13 +205,14 @@ namespace JudoPayiOSXamarinSampleApp
             _menu = new SlideUpMenu (new RectangleF (0, (float)this.View.Frame.Bottom - 40f, (float)this.View.Frame.Width, 448f));
             _menu.AwakeFromNib ();
             _menu.AutoresizingMask = UIViewAutoresizing.FlexibleMargins;
+            _menu.MenuClosed += () => SetItemList ();
             this.View.AddSubview (_menu);
         }
 
         PaymentViewModel GetCardViewModel ()
         {
             var cardPayment = new PaymentViewModel {
-                Amount = 4.5m, 
+                Amount = 4.5m,
                 ConsumerReference = consumerRef,
                 Currency = "GBP",
                 // Non-UI API needs to pass card detail
@@ -216,9 +227,14 @@ namespace JudoPayiOSXamarinSampleApp
             return cardPayment;
         }
 
+        private void SetItemList ()
+        {
+            SetUpTableView ();
+        }
+
         ApplePayViewModel GetApplePayViewModel ()
         {
-            var summaryItems = new PKPaymentSummaryItem[] {
+            var summaryItems = new PKPaymentSummaryItem [] {
                 new PKPaymentSummaryItem () {
                     Amount = new NSDecimalNumber ("0.90"),
                     Label = @"Judo Burrito"
@@ -230,15 +246,14 @@ namespace JudoPayiOSXamarinSampleApp
 
                 }
             };
-			
             var applePayment = new ApplePayViewModel {
-				
+
                 CurrencyCode = new NSString ("GBP"),
                 CountryCode = new NSString (@"GB"),
-                SupportedNetworks = new NSString[3] {
-                    new NSString ("Visa"),
-                    new NSString ("MasterCard"),
-                    new NSString ("Amex")
+                SupportedNetworks = new NSString [3] {
+                    new NSString (PassKit.PKPaymentNetwork.Visa),
+                    new NSString (PassKit.PKPaymentNetwork.MasterCard),
+                    new NSString (PassKit.PKPaymentNetwork.Amex)
                 },
                 SummaryItems = summaryItems,
                 TotalSummaryItem = new PKPaymentSummaryItem () {
@@ -270,6 +285,16 @@ namespace JudoPayiOSXamarinSampleApp
                 NavigationController.DismissViewController (true, null);
             } else {
                 NavigationController.PopViewController (true);
+            }
+        }
+
+        static void CheckLocationPermissions ()
+        {
+            CLLocationManager locationManager = new CLLocationManager ();
+
+            if (UIDevice.CurrentDevice.CheckSystemVersion (8, 0) && (CLLocationManager.Status != CLAuthorizationStatus.Authorized)) {
+
+                locationManager.RequestWhenInUseAuthorization ();
             }
         }
     }

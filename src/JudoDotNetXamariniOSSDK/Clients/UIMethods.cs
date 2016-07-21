@@ -16,7 +16,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         public void Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
         {
             var vc = GetCurrentViewController ();
-		
+
             if (Judo.UIMode && vc == null) {
                 var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
                 failure (error);
@@ -59,13 +59,13 @@ namespace JudoDotNetXamariniOSSDK.Clients
                 var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
                 failure (error);
             } else {
-				
+
                 var view = _viewLocator.GetTokenPaymentView ();
                 view.successCallback = success;
                 view.failureCallback = failure;
                 view.tokenPayment = payment;
                 PresentView (vc, view);
-			
+
             }
         }
 
@@ -77,7 +77,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
                 var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
                 failure (error);
             } else {
-				
+
                 var view = _viewLocator.GetTokenPreAuthView ();
                 view.successCallback = success;
                 view.failureCallback = failure;
@@ -104,8 +104,8 @@ namespace JudoDotNetXamariniOSSDK.Clients
 
         private void PresentView (UIViewController rootView, UIViewController view)
         {
-            
-           
+
+
             if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
                 view.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
                 view.ModalTransitionStyle = UIModalTransitionStyle.CrossDissolve;
@@ -129,6 +129,16 @@ namespace JudoDotNetXamariniOSSDK.Clients
                 return splitView.ViewControllers [0];
             }
             return vc;
+        }
+
+        /// <summary>
+        /// for ui operations you shouldn't need to use this. 
+        /// It does it automatically when a new view is constructed
+        /// </summary>
+        /// <returns>The session.</returns>
+        public void CycleSession ()
+        {
+            _viewLocator.CycleSession ();
         }
     }
 }

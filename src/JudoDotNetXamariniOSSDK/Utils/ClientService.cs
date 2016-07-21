@@ -2,15 +2,19 @@
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 using Foundation;
-using JudoShieldXamarin;
+using JudoShieldiOS;
 using PassKit;
 using UIKit;
 using JudoDotNetXamarin;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using JudoPayDotNet.Models;
+using System.Drawing;
 
 
 #if __UNIFIED__
 // Mappings Unified CoreGraphic classes to MonoTouch classes
+using CoreLocation;
 
 #else
 using MonoTouch.UIKit;
@@ -26,9 +30,9 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK
 {
-    public  class ClientService :IClientService
+    public class ClientService : IClientService
     {
-        public  JObject GetClientDetails ()
+        public JObject GetClientDetails ()
         {
             if (!Judo.Instance.RiskSignals) {
                 return null;
@@ -36,20 +40,23 @@ namespace JudoDotNetXamariniOSSDK
 
             var clientDetails = new ClientDetails {
                 OS = "iOS " + UIDevice.CurrentDevice.SystemVersion,
-                DeviceId = GetDeviceMacAddress (),
+                KDeviceId = JudoShield.GetKDeviceIdentifier (),
+                VDeviceId = JudoShield.GetVDeviceIdentifier (),
                 DeviceModel = UIDevice.CurrentDevice.Model,
-                Serial = JudoShield.GetDeviceIdentifier (),
                 CultureLocale = NSLocale.CurrentLocale.CountryCode,
                 SslPinningEnabled = Judo.Instance.SSLPinningEnabled
             };
 
-
             return JObject.FromObject (clientDetails);
         }
 
-        private  string GetDeviceMacAddress ()
+
+
+
+
+        private string GetDeviceMacAddress ()
         {
-            foreach (var netInterface in NetworkInterface.GetAllNetworkInterfaces()) {
+            foreach (var netInterface in NetworkInterface.GetAllNetworkInterfaces ()) {
                 if (netInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 ||
                     netInterface.NetworkInterfaceType == NetworkInterfaceType.Ethernet) {
                     var address = netInterface.GetPhysicalAddress ();
@@ -61,20 +68,24 @@ namespace JudoDotNetXamariniOSSDK
             return "NoMac";
         }
 
-        public  bool ApplePayAvailable {
+        public bool ApplePayAvailable {
             get {
-                NSString[] paymentNetworks = new NSString[] {
-                    new NSString (@"Amex"),
-                    new NSString (@"MasterCard"),
-                    new NSString (@"Visa")
-                };
 
-                if (PKPaymentAuthorizationViewController.CanMakePayments && PKPaymentAuthorizationViewController.CanMakePaymentsUsingNetworks (paymentNetworks)) {
+                List<NSString> paymentNetworks = new List<NSString> ();
+                paymentNetworks.Add (PassKit.PKPaymentNetwork.Visa);
+                paymentNetworks.Add (PassKit.PKPaymentNetwork.MasterCard);
+
+                if (Judo.Instance.AmExAccepted) {
+                    paymentNetworks.Add (PassKit.PKPaymentNetwork.Amex);
+
+                }
+
+                if (PKPaymentAuthorizationViewController.CanMakePayments && PKPaymentAuthorizationViewController.CanMakePaymentsUsingNetworks (paymentNetworks.ToArray ())) {
                     return true;
                 } else {
 
                     return false;
-                }		
+                }
             }
         }
 
@@ -90,10 +101,24 @@ namespace JudoDotNetXamariniOSSDK
             } catch (System.Exception e) {
                 return "Xamarin-iOS-" + "UNKNOWN-AssembleyNotFound";
             }
-           
+
         }
 
-		
+        public ConsumerLocationModel GetDeviceLocation ()
+        {
+            PointF location = JudoShield.GetDeviceLocation ();
 
+            if (location != null) {
+                return new ConsumerLocationModel {
+                    Longitude = (decimal)location.X,
+                    Latitude = (decimal)location.Y
+                };
+            }
+            return new ConsumerLocationModel {
+                Longitude = 0,
+                Latitude = 0
+            };
+
+        }
     }
 }
