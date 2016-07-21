@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo ("JudoDotNetXamariniOSSDK")]
 [assembly: InternalsVisibleTo ("JudoDotNetXamarinAndroidSDK")]
+[assembly: InternalsVisibleTo("JudoDotNetXamarin.Tests")]
 namespace JudoDotNetXamarin
 {
     internal class ServiceFactory
