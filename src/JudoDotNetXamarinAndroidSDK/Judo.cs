@@ -94,7 +94,7 @@ namespace JudoDotNetXamarinAndroidSDK
             RiskSignals = true;
             AmExAccepted = true;
             MaestroAccepted = true;
-
+			AllowRooted = true;
             _rootCheck = new RootCheck ();
             isRooted = _rootCheck.IsRooted ();
 
@@ -121,36 +121,44 @@ namespace JudoDotNetXamarinAndroidSDK
             }
         }
 
-        public void Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
-        {
-            EvaluateRootCheck (failure);
-            var innerModel = payment.Clone ();
-            _judoSdkApi.Payment (innerModel, success, failure, context);
+		public void Payment(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
+		{
+			if (!RootEvaluationFailure(failure))
+			{
+				var innerModel = payment.Clone();
+				_judoSdkApi.Payment(innerModel, success, failure, context);
+			}
 
         }
 
         public void PreAuth (PaymentViewModel preAuthorisation, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
-            EvaluateRootCheck (failure);
-            var innerModel = preAuthorisation.Clone ();
-            _judoSdkApi.PreAuth (innerModel, success, failure, context);
+			if (!RootEvaluationFailure(failure))
+			{
+				var innerModel = preAuthorisation.Clone();
+				_judoSdkApi.PreAuth(innerModel, success, failure, context);
+			}
 
         }
 
         public void TokenPayment (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
-            EvaluateRootCheck (failure);
-            var innerModel = payment.Clone ();
-            _judoSdkApi.TokenPayment (innerModel, success, failure, context);
+			if (!RootEvaluationFailure(failure))
+			{
+				var innerModel = payment.Clone();
+				_judoSdkApi.TokenPayment(innerModel, success, failure, context);
+			}
         }
 
 
 
         public void TokenPreAuth (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
-            EvaluateRootCheck (failure);
-            var innerModel = payment.Clone ();
-            _judoSdkApi.TokenPreAuth (innerModel, success, failure, context);
+			if (!RootEvaluationFailure(failure))
+			{
+				var innerModel = payment.Clone();
+				_judoSdkApi.TokenPreAuth(innerModel, success, failure, context);
+			}
         }
 
         public void RegisterCard (PaymentViewModel registerCard, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
@@ -158,9 +166,11 @@ namespace JudoDotNetXamarinAndroidSDK
             if (registerCard.Amount == 0) {
                 registerCard.Amount = 1.01m;
             }
-            EvaluateRootCheck (failure);
-            var innerModel = registerCard.Clone ();
-            _judoSdkApi.RegisterCard (innerModel, success, failure, context);
+			if (!RootEvaluationFailure(failure))
+			{
+				var innerModel = registerCard.Clone();
+				_judoSdkApi.RegisterCard(innerModel, success, failure, context);
+			}
         }
 
         internal static string DEBUG_TAG = "com.judopay.android";
@@ -240,14 +250,23 @@ namespace JudoDotNetXamarinAndroidSDK
             return intent;
         }
 
-        void EvaluateRootCheck (JudoFailureCallback failure)
+		bool RootEvaluationFailure (JudoFailureCallback failure)
         {
-            if (!AllowRooted && isRooted) {
-                failure (new JudoError () {
-                    Exception = new Exception ("Users Device is rooted and app is configured to block calls from rooted Device"),
-                    ApiError = null
-                });
-            }
+			if (AllowRooted)
+			{
+				return false;
+			}
+				
+			if (isRooted)
+			{
+				failure(new JudoError()
+				{
+					Exception = new Exception("Users Device is rooted and app is configured to block calls from rooted Device"),
+					ApiError = null
+				});
+			}
+
+			return isRooted;
         }
 
         public void CycleSession ()

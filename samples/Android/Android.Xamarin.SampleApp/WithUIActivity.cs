@@ -112,32 +112,51 @@ namespace Android.Xamarin.SampleApp
             string title = "Error";
             StringBuilder builder = new StringBuilder ();
 
-            if (error != null && error.ApiError != null) {
-                title = (error.ApiError.Message);
-                if (error.ApiError.ModelErrors != null && error.ApiError.ModelErrors.Count > 0) {
-                    foreach (FieldError model in error.ApiError.ModelErrors) {
-                        builder.AppendLine (model.Message + (!String.IsNullOrWhiteSpace (model.FieldName) ? "(" + model.FieldName + ")" : ""));
-                    }
+			if (error != null )
+			{
+				if (error.ApiError != null)
+				{
+					title = (error.ApiError.Message);
+					if (error.ApiError.ModelErrors != null && error.ApiError.ModelErrors.Count > 0)
+					{
+						foreach (FieldError model in error.ApiError.ModelErrors)
+						{
+							builder.AppendLine(model.Message + (!String.IsNullOrWhiteSpace(model.FieldName) ? "(" + model.FieldName + ")" : ""));
+						}
 
-                    if (error.ApiError == null || error.ApiError.Code != 86) {// represents the duplicate payment error code
-                        if (!Judo.UIMode) {
-                            Judo.Instance.CycleSession ();
-                        }
-                    }
+						if (error.ApiError == null || error.ApiError.Code != 86)
+						{// represents the duplicate payment error code
+							if (!Judo.UIMode)
+							{
+								Judo.Instance.CycleSession();
+							}
+						}
 
-                } else {
-                    title = ("Error");
-                    builder.AppendLine (error.ApiError.Message);
-                    if (!Judo.UIMode) {
-                        Judo.Instance.CycleSession ();
-                    }
-                }
-            }
+					}
+					else {
+						title = ("Error");
+						builder.AppendLine(error.ApiError.Message);
+						if (!Judo.UIMode)
+						{
+							Judo.Instance.CycleSession();
+						}
+					}
+				}
+				else if(error.Exception!=null)
+				{
+					builder.AppendLine(error.Exception.Message);
+				}
+			
+			}
             if (receipt != null) {
                 builder.AppendLine ("Transaction : " + receipt.Result);
                 builder.AppendLine (receipt.Message);
                 builder.AppendLine ("Receipt ID - " + receipt.ReceiptId);
             }
+			if (builder.Length == 0)
+			{
+				builder.AppendLine("An unhandled error has occured. Please contact Judo and report this bug");
+			}
             alert.SetTitle (title);
             alert.SetMessage (builder.ToString ());
             alert.SetPositiveButton ("OK", (senderAlert, args) => {
@@ -239,15 +258,19 @@ namespace Android.Xamarin.SampleApp
             //setting for Sandnox
             configInstance.Environment = JudoEnvironment.Live;
             Judo.UIMode = true;
-            //Judo.AVSEnabled = true;
+			//Judo.AVSEnabled = true;
 
-            /*
+			/*
             configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal
             configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal
             configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
             */
+			configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
+			configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
+			configInstance.JudoId = "100915867";
+			// configInstance.JudoId = "958389";//applepay 
 
-            if (configInstance.ApiToken == null) {
+			if (configInstance.ApiToken == null) {
 
                 throw (new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
             }
