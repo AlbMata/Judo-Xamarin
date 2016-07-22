@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assertions.cs" />
     <Compile Include="AuthenticationTests.cs" />
     <Compile Include="Builders\PaymentViewModelBuilder.cs" />
     <Compile Include="CardDetailsSetTests.cs" />

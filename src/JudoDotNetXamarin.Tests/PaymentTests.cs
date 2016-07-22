@@ -33,14 +33,11 @@ namespace JudoDotNetXamarin.Tests
             var result = await sut.MakePayment(paymentViewModel, GetClientService());
 
             //Then the payments must succeed.
-            Assert.IsNotNull(result);
-            Assert.IsFalse(result.HasError);
-            Assert.IsNotNull(result.Response);
-            Assert.IsTrue(result.Response.ReceiptId > 0);
+            Assertions.AssertSuccessfulCardPayment(result);
         }
 
         [Test]
-        public async Task InvalidPayment()
+        public async Task DeclinedPayment()
         {
             //Given I have a valid set of credentials not set up for 3d secure.
             var credentials = CredientialsManager.GetCredientialsSetFromKey(CreditialsSetKey.ValidSetNoThreeDSecure);
@@ -61,10 +58,8 @@ namespace JudoDotNetXamarin.Tests
             //And call the payment service.
             var result = await sut.MakePayment(paymentViewModel, GetClientService());
 
-            //Then the payments must succeed.
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.HasError);
-            Assert.IsNotNull(result.Response);
+            //Then the payments must be declined.
+            Assertions.AssertDeclinedCardPayment(result);
         }
     }
 }

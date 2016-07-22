@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using JudoDotNetXamarin.Tests.Credentials;
 using JudoPayDotNet.Enums;
+using NUnit.Framework;
 
 namespace JudoDotNetXamarin.Tests
 {
