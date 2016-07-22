@@ -30,6 +30,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JudoPayDotNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\JudoPayDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="ModernHttpClient, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\modernhttpclient.2.4.2\lib\Portable-Net45+WinRT45+WP8+WPA81\ModernHttpClient.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.4.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.4.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -45,8 +57,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationTests.cs" />
+    <Compile Include="Builders\PaymentViewModelBuilder.cs" />
     <Compile Include="CardDetailsSetTests.cs" />
+    <Compile Include="Payments\PaymentManager.cs" />
+    <Compile Include="Payments\PaymentKey.cs" />
     <Compile Include="ConfigurationTests.cs" />
+    <Compile Include="Credentials\CredientialsManager.cs" />
+    <Compile Include="Credentials\CredientialsSet.cs" />
+    <Compile Include="Credentials\CreditialsSetKey.cs" />
     <Compile Include="DedupTestCase.cs" />
     <Compile Include="ErrorMessageContentsTests.cs" />
     <Compile Include="JudoTestBase.cs" />
@@ -58,6 +76,7 @@
     <Compile Include="TokenPreAuthTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +85,7 @@
       <Name>JudoDotNetXamarin</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

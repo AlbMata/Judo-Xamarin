@@ -20,10 +20,13 @@ namespace JudoDotNetXamarin.Tests
         [Test, TestCaseSource("GetConfigurationTests")]
         public void When_Configuration_Is_Not_Valid_Validation_Must_Fail_And_Throw_Exception(string judoId, string token, string secret)
         {
+            //Given I have an invalid credentials set.
             var sut = GetConfiguration();
             sut.ApiToken = token;
             sut.ApiSecret = secret;
             sut.JudoId = judoId;
+            //When I attempt to validate them.
+            //Then an exception must be thrown.
             Assert.Throws<Exception>(() => sut.Validate());
         }
     }
