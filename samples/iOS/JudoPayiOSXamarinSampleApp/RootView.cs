@@ -99,32 +99,52 @@ namespace JudoPayiOSXamarinSampleApp
                 string message = "";
                 StringBuilder builder = new StringBuilder ();
 
-                if (error != null && error.ApiError != null)
-                    title = (error.ApiError != null ? error.ApiError.Message : "");
+				if (error != null)
+				{
+					if (error.ApiError != null)
+					{
+						title = (error.ApiError.Message);
+						if (error.ApiError.ModelErrors != null && error.ApiError.ModelErrors.Count > 0)
+						{
+							foreach (FieldError model in error.ApiError.ModelErrors)
+							{
+								builder.AppendLine(model.Message + (!String.IsNullOrWhiteSpace(model.FieldName) ? "(" + model.FieldName + ")" : ""));
+							}
 
-                if (error != null && error.ApiError != null) {
-                    if (error.ApiError.ModelErrors != null && error.ApiError.ModelErrors.Count > 0) {
-                        foreach (FieldError model in error.ApiError.ModelErrors) {
-                            builder.AppendLine (model.Message);
+							if (error.ApiError == null || error.ApiError.Code != 86)
+							{// represents the duplicate payment error code
+								if (!Judo.UIMode)
+								{
+									Judo.Instance.CycleSession();
+								}
+							}
 
-                        }
-                    } else {
-                        title = "Error";
-                        builder.AppendLine (error.ApiError.Message);
-                    }
-                }
+						}
+						else {
+							title = ("Error");
+							builder.AppendLine(error.ApiError.Message);
+							if (!Judo.UIMode)
+							{
+								Judo.Instance.CycleSession();
+							}
+						}
+					}
+					else if (error.Exception != null)
+					{
+						builder.AppendLine(error.Exception.Message);
+					}
 
-                if (error.ApiError == null || error.ApiError.Code != 86) {// represents the duplicate payment error code
-                    if (!Judo.UIMode) {
-                        Judo.Instance.CycleSession ();
-                    }
-                }
-
-                if (receipt != null) {
-                    builder.AppendLine ("Transaction : ");
-                    builder.AppendLine (receipt.Message);
-                    builder.AppendLine ("Receipt ID - " + receipt.ReceiptId);
-                }
+				}
+				if (receipt != null)
+				{
+					builder.AppendLine("Transaction : " + receipt.Result);
+					builder.AppendLine(receipt.Message);
+					builder.AppendLine("Receipt ID - " + receipt.ReceiptId);
+				}
+				if (builder.Length == 0)
+				{
+					builder.AppendLine("An unhandled error has occured. Please contact Judo and report this bug");
+				}
 
                 ShowMessage (title, builder.ToString ());
             });

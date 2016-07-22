@@ -15,7 +15,6 @@
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <DevInstrumentationEnabled>True</DevInstrumentationEnabled>
     <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
-    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <AndroidApplication>false</AndroidApplication>
     <ReleaseVersion>2.4.0</ReleaseVersion>
   </PropertyGroup>
@@ -112,7 +111,6 @@
     <None Include="packages.config" />
     <AndroidResource Include="Resources\Drawable\gold_button_bg.xml" />
     <AndroidResource Include="Resources\Drawable\grey_button_bg.xml" />
-    <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Strings.xml" />
