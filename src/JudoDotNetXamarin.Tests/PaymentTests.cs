@@ -38,5 +38,33 @@ namespace JudoDotNetXamarin.Tests
             Assert.IsNotNull(result.Response);
             Assert.IsTrue(result.Response.ReceiptId > 0);
         }
+
+        [Test]
+        public async Task InvalidPayment()
+        {
+            //Given I have a valid set of credentials not set up for 3d secure.
+            var credentials = CredientialsManager.GetCredientialsSetFromKey(CreditialsSetKey.ValidSetNoThreeDSecure);
+            SetConfiguration(credentials);
+
+            var sut = GetPaymentService();
+
+            //When I set up a card payment.
+            var cardViewModel = PaymentManager.GetCardViewModelFromKey(PaymentKey.InvalidVisaCardPayment);
+            var paymentViewModel =
+                new PaymentViewModelBuilder()
+                    .WithCardViewModel(cardViewModel)
+                    .WithAmount(1.01m)
+                    .WithConsumerReference(Guid.NewGuid().ToString())
+                    .WithCurrency("GBP")
+                    .Build();
+
+            //And call the payment service.
+            var result = await sut.MakePayment(paymentViewModel, GetClientService());
+
+            //Then the payments must succeed.
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.HasError);
+            Assert.IsNotNull(result.Response);
+        }
     }
 }

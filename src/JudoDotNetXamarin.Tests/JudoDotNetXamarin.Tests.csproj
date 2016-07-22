@@ -59,6 +59,8 @@
     <Compile Include="AuthenticationTests.cs" />
     <Compile Include="Builders\PaymentViewModelBuilder.cs" />
     <Compile Include="CardDetailsSetTests.cs" />
+    <Compile Include="FakeClientService.cs" />
+    <Compile Include="HttpClientHelper.cs" />
     <Compile Include="Payments\PaymentManager.cs" />
     <Compile Include="Payments\PaymentKey.cs" />
     <Compile Include="ConfigurationTests.cs" />

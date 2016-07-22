@@ -19,9 +19,14 @@ namespace JudoDotNetXamarin.Tests
             return factory.GetPaymentService();
         }
 
+        internal JudoConfiguration GetConfiguration()
+        {
+            return JudoConfiguration.Instance;
+        }
+
         internal void SetConfiguration(CredientialsSet credientialsSet)
         {
-            var config = JudoConfiguration.Instance;
+            var config = GetConfiguration();
             config.ApiToken = credientialsSet.Token;
             config.ApiSecret = credientialsSet.Secret;
             config.JudoId = credientialsSet.JudoId;
